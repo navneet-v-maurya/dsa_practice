@@ -58,26 +58,81 @@ class SinglyLinkedList {
   print() {
     let str = "";
     let current = this.head;
-    while (current) {
+    let count = 1;
+    while (count <= this.size) {
       str += str.length === 0 ? `${current.val}` : `->${current.val}`;
       current = current.next;
+      count++;
     }
     return (str += str.length != 0 ? "->null" : "null");
+  }
+
+  shift() {
+    if (this.size === 0) return null;
+
+    let current = this.head;
+
+    const temp_val = current.val;
+
+    this.head = current.next;
+
+    if (this.size === 1) {
+      this.tail = null;
+    }
+
+    current = null;
+    this.size--;
+
+    return temp_val;
+  }
+
+  unshift(val) {
+    const new_node = new Node(val);
+    if (this.size === 0) {
+      this.head = new_node;
+      this.tail = new_node;
+    } else {
+      new_node.next = this.head;
+      this.head = new_node;
+    }
+    this.size++;
+    return this;
+  }
+
+  reverse() {
+    let prev = null;
+    let current = this.head;
+    let next = null;
+
+    while (current) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+
+    this.tail = this.head;
+    this.head = prev;
+    return this;
   }
 }
 
 const singly = new SinglyLinkedList();
 
+singly.unshift(5);
 console.log(singly.print());
 singly.push(1);
 singly.push(2);
 singly.push(3);
-console.log(singly.print());
-singly.pop();
-console.log(singly.print());
 singly.push(4);
-singly.pop();
-singly.pop();
-singly.pop();
-singly.pop();
+console.log(singly.print());
+singly.reverse();
+console.log(singly.print());
+singly.shift();
+singly.shift();
+singly.shift();
+console.log(singly.print());
+singly.unshift(5);
+console.log(singly.print());
+singly.reverse();
 console.log(singly.print());
