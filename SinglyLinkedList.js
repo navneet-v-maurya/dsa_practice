@@ -115,24 +115,79 @@ class SinglyLinkedList {
     this.head = prev;
     return this;
   }
+
+  remove_nth_node(n) {
+    let curr = this.head;
+    let count = 1;
+    let prev = null;
+
+    if (n === 1) return this.shift();
+
+    while (curr) {
+      if (count === n) {
+        if (!curr.next) return this.pop();
+
+        let temp = curr.val;
+        prev.next = curr.next;
+        this.size--;
+        return temp;
+      }
+
+      prev = curr;
+      curr = curr.next;
+      count++;
+    }
+
+    return null;
+  }
 }
 
-const singly = new SinglyLinkedList();
+const singly1 = new SinglyLinkedList();
+const singly2 = new SinglyLinkedList();
 
-singly.unshift(5);
-console.log(singly.print());
-singly.push(1);
-singly.push(2);
-singly.push(3);
-singly.push(4);
-console.log(singly.print());
-singly.reverse();
-console.log(singly.print());
-singly.shift();
-singly.shift();
-singly.shift();
-console.log(singly.print());
-singly.unshift(5);
-console.log(singly.print());
-singly.reverse();
-console.log(singly.print());
+singly1.push(1);
+singly2.push(2);
+singly1.push(3);
+singly2.push(4);
+singly2.push(6);
+singly2.push(7);
+
+console.log(singly1.print());
+console.log(singly2.print());
+
+// function to merge two sorted list
+merger_sorted_lists = (l1, l2) => {
+  const output = new Node();
+  let tail = output;
+
+  while (l1 && l2) {
+    if (l1.val < l2.val) {
+      tail.next = l1;
+      l1 = l1.next;
+    } else {
+      tail.next = l2;
+      l2 = l2.next;
+    }
+    tail = tail.next;
+  }
+
+  if (l1) {
+    tail.next = l1;
+  }
+
+  if (l2) {
+    tail.next = l2;
+  }
+
+  // just to print the sorted values in array form
+  const values = [];
+  let current = output.next;
+  while (current) {
+    values.push(current.val);
+    current = current.next;
+  }
+
+  return values;
+};
+
+console.log(merger_sorted_lists(singly1.head, singly2.head));
