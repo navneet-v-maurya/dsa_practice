@@ -56,7 +56,7 @@ class DoublyLinkedList {
       curr = curr.next;
     }
 
-    return str + " --> null";
+    console.log(str + " --> null");
   }
 
   shift() {
@@ -93,17 +93,45 @@ class DoublyLinkedList {
   }
 
   remove_nth_node(n) {
-    // remove nth node from the list
+    let curr = this.head;
+    let count = 1;
+    while (curr) {
+      if (count === n) {
+        if (n === 1) {
+          return this.shift();
+        } else if (!curr.next) {
+          return this.pop();
+        } else {
+          curr.prev.next = curr.next;
+          curr.next.prev = curr.prev;
+        }
+        this.size--;
+        return curr.val;
+      }
+
+      count++;
+      curr = curr.next;
+    }
+
+    return null;
   }
 }
 
 const doubly = new DoublyLinkedList();
 
+doubly.remove_nth_node(2);
 doubly.unshift(1);
+doubly.unshift(2);
+doubly.remove_nth_node(1);
+doubly.unshift(3);
 doubly.push(2);
 doubly.push(3);
-console.log(doubly.print());
 doubly.unshift(0);
-console.log(doubly.print());
+doubly.remove_nth_node(2);
+doubly.print();
 
 console.log(doubly);
+
+const merger_sorted_lists = (l1, l2) => {
+  //merge tow sorted doubly linked list in sorted order
+};
