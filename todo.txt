@@ -1,2 +1,8 @@
-singly linked list:
-     1. sorting
+==>   Singly Linked List:
+                        1. sorting
+
+
+==>   Doubly Linked List:
+                        1. sorting
+
+
