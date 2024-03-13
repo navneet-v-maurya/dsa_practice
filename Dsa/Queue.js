@@ -1,14 +1,15 @@
-//implement stack using singly link list
+//implement Queue using Doubly link list
 //add and removal time is O(1)
 
 class Node {
   constructor(val) {
     this.val = val;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class Stack {
+class Queue {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -20,8 +21,9 @@ class Stack {
       this.head = new_node;
       this.tail = new_node;
     } else {
-      new_node.next = this.head;
-      this.head = new_node;
+      this.tail.next = new_node;
+      new_node.prev = this.tail;
+      this.tail = new_node;
     }
     return this;
   }
@@ -29,20 +31,16 @@ class Stack {
   pop() {
     if (!this.head) return null;
 
-    let current = this.head;
-
-    const temp_val = current;
-
-    this.head = current.next;
-
+    let temp = this.head.val;
     if (!this.head.next) {
+      this.head = null;
       this.tail = null;
+    } else {
+      this.head = this.head.next;
+      this.head.prev = null;
     }
-
-    current = null;
-
-    return temp_val;
+    return temp;
   }
 }
 
-export default Stack;
+export default Queue;
