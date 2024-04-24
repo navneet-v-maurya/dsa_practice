@@ -33,5 +33,26 @@ const insertion_sort = (arr) => {
   return arr;
 }; //O(n^2)
 
+const selection_sort = (arr) => {
+  let min, min_index, temp;
+  for (let i = 0; i < arr.length; i++) {
+    min = arr[i];
+    min_index = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < min) {
+        min = arr[j];
+        min_index = j;
+      }
+    }
+    temp = arr[i];
+    arr[i] = min;
+    arr[min_index] = temp;
+  }
+  return arr;
+}; //O(n^2)
+
+const heap_sort = (arr) => {};
+
 console.log(bubble_sort([1, 3, 2]));
 console.log(insertion_sort([5, 1, 1, 2, 0, 0]));
+console.log(selection_sort([5, 1, 1, 2, 0, 0]));
