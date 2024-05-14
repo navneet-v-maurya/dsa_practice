@@ -9,8 +9,7 @@ class Heap {
     let parent = Math.floor((child - 1) / 2);
 
     while (parent >= 0) {
-      console.log(val, this.values);
-      if (this.values[parent] > this.values[child]) {
+      if (this.values[parent] < this.values[child]) {
         let temp = this.values[parent];
         this.values[parent] = this.values[child];
         this.values[child] = temp;
@@ -40,11 +39,11 @@ class Heap {
 
     while (left_child < this.values.length) {
       let smaller_child =
-        right_child < this.values.length && this.values[right_child] < this.values[left_child]
+        right_child < this.values.length && this.values[right_child] > this.values[left_child]
           ? right_child
           : left_child;
 
-      if (this.values[parent] > this.values[smaller_child]) {
+      if (this.values[parent] < this.values[smaller_child]) {
         let temp = this.values[parent];
         this.values[parent] = this.values[smaller_child];
         this.values[smaller_child] = temp;
@@ -61,17 +60,17 @@ class Heap {
   }
 }
 
-const h = new Heap();
-h.push(5);
-h.push(4);
-h.push(6);
-h.push(7);
-h.push(0);
-h.push(11);
-console.log(h.pop());
-console.log(h.pop());
-console.log(h.pop());
-console.log(h.pop());
-console.log(h);
+// const h = new Heap();
+// h.push(5);
+// h.push(4);
+// h.push(6);
+// h.push(7);
+// h.push(0);
+// h.push(11);
+// console.log(h.pop());
+// console.log(h.pop());
+// console.log(h.pop());
+// console.log(h.pop());
+// console.log(h);
 
-//module.exports = Heap;
+module.exports = Heap;

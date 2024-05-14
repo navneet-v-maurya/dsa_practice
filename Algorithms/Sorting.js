@@ -51,8 +51,64 @@ const selection_sort = (arr) => {
   return arr;
 }; //O(n^2)
 
-const heap_sort = (arr) => {};
+//importing heap data strutcture
+const Heap = require("../Dsa/Heap");
 
-console.log(bubble_sort([1, 3, 2]));
+const heap_sort = (arr) => {
+  let min_heap = new Heap();
+
+  for (let i = 0; i < arr.length; i++) {
+    min_heap.push(arr[i]);
+  }
+
+  let count = arr.length - 1;
+  let root;
+  while (min_heap.values.length >= 1) {
+    root = min_heap.pop();
+    arr[count] = root;
+    count--;
+  }
+
+  return arr;
+}; //O(nlog(n))
+
+const merge = (arr1, arr2) => {
+  let result = [];
+  let left = 0,
+    right = 0;
+  while (left < arr1.length && right < arr2.length) {
+    if (arr1[left] < arr2[right]) {
+      result.push(arr1[left]);
+      left++;
+    } else {
+      result.push(arr2[right]);
+      right++;
+    }
+  }
+
+  while (left < arr1.length) {
+    result.push(arr1[left]);
+    left++;
+  }
+
+  while (right < arr2.length) {
+    result.push(arr2[right]);
+    right++;
+  }
+
+  return result;
+};
+const merge_sort = (arr) => {
+  if (arr.length <= 1) return arr;
+  let mid = Math.floor(arr.length / 2);
+  let left = merge_sort(arr.slice(0, mid));
+  let right = merge_sort(arr.slice(mid, arr.length));
+
+  return merge(left, right);
+};
+
+console.log(bubble_sort([5, 1, 1, 2, 0, 0]));
 console.log(insertion_sort([5, 1, 1, 2, 0, 0]));
 console.log(selection_sort([5, 1, 1, 2, 0, 0]));
+console.log(heap_sort([5, 1, 1, 2, 0, 0]));
+console.log(merge_sort([5, 1, 1, 2, 0, 0]));
