@@ -98,6 +98,7 @@ const merge = (arr1, arr2) => {
 
   return result;
 };
+
 const merge_sort = (arr) => {
   if (arr.length <= 1) return arr;
   let mid = Math.floor(arr.length / 2);
@@ -105,10 +106,37 @@ const merge_sort = (arr) => {
   let right = merge_sort(arr.slice(mid, arr.length));
 
   return merge(left, right);
+}; //O(nlog(n))
+
+const pivot = (arr, start, end) => {
+  let pivot_value = arr[start];
+  let pivot_index = start;
+  for (let i = start + 1; i <= end; i++) {
+    if (arr[i] < pivot_value) {
+      pivot_index++;
+      let temp = arr[i];
+      arr[i] = arr[pivot_index];
+      arr[pivot_index] = temp;
+    }
+  }
+  let temp = arr[pivot_index];
+  arr[pivot_index] = pivot_value;
+  arr[start] = temp;
+  return pivot_index;
 };
+
+const quick_sort = (arr, start = 0, end = arr.length - 1) => {
+  if (start < end) {
+    let pivot_index = pivot(arr, start, end);
+    quick_sort(arr, start, pivot_index - 1);
+    quick_sort(arr, pivot_index + 1, end);
+  }
+  return arr;
+}; //O(nlog(n))=best  o(n^2)=worst
 
 console.log(bubble_sort([5, 1, 1, 2, 0, 0]));
 console.log(insertion_sort([5, 1, 1, 2, 0, 0]));
 console.log(selection_sort([5, 1, 1, 2, 0, 0]));
 console.log(heap_sort([5, 1, 1, 2, 0, 0]));
 console.log(merge_sort([5, 1, 1, 2, 0, 0]));
+console.log(quick_sort([5, 1, 1, 2, 0, 0]));
