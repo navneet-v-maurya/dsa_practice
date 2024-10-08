@@ -25,8 +25,8 @@ const get_number_of_digits_using_log = (input) => {
   return Math.floor(Math.log10(input) + 1);
 };
 
-console.log(get_number_of_digits(3456));
-console.log(get_number_of_digits_using_log(7864786));
+console.log("get_number_of_digits = ", get_number_of_digits(3456));
+console.log("get_number_of_digits_using_log = ", get_number_of_digits_using_log(7864786));
 
 //Problem Statement: Given an integer N return the reverse of the given number.
 // Example 1:
@@ -50,7 +50,7 @@ const reverse_number = (input) => {
   return num;
 };
 
-console.log(reverse_number(12));
+console.log("reverse_number = ", reverse_number(12));
 
 //Problem Statement: Given an integer N, return true if it is a palindrome else return false.
 //A palindrome is a number that reads the same backward as forward. For example, 121, 1331, and
@@ -71,7 +71,7 @@ const check_palindrome = (input) => {
   return false;
 };
 
-console.log(check_palindrome(1221));
+console.log("check_palindrome = ", check_palindrome(1221));
 
 // Problem Statement: Given two integers N1 and N2, find their greatest common divisor.
 // The Greatest Common Divisor of any two integers is the largest number that divides both integers.
@@ -137,9 +137,9 @@ const get_gcd_better_optimized = (num1, num2) => {
   return num;
 };
 
-console.log(get_gcd(9, 15));
-console.log(get_gcd_better_approach(9, 15));
-console.log(get_gcd_better_optimized(20, 100));
+console.log("get_gcd = ", get_gcd(9, 15));
+console.log("get_gcd_better_approach = ", get_gcd_better_approach(9, 15));
+console.log("get_gcd_better_optimized = ", get_gcd_better_optimized(20, 100));
 
 // Problem Statement: Given an integer N, return true it is an Armstrong number otherwise return false.
 // An Amrstrong number is a number that is equal to the sum of its own digits each raised to the power of the number of digits.
@@ -169,12 +169,21 @@ const check_armstrong_number = (input) => {
   return false;
 };
 
-console.log(check_armstrong_number(371));
+console.log("check_armstrong_number = ", check_armstrong_number(371));
 
 // Problem Statement: Given an integer N, return all divisors of N.
 // A divisor of an integer N is a positive integer that divides N without leaving a remainder.
 // In other words, if N is divisible by another integer without any remainder, then that integer
 // is considered a divisor of N.
+
+// Example 1:
+// Input:N = 36
+// Output:[1, 2, 3, 4, 6, 9, 12, 18, 36]
+// Explanation: The divisors of 36 are 1, 2, 3, 4, 6, 9, 12, 18, 36.
+// Example 2:
+// Input:N =12
+// Output: [1, 2, 3, 4, 6, 12]
+// Explanation: The divisors of 12 are 1, 2, 3, 4, 6, 12.
 
 const get_divisors = (input) => {
   const divisors = [];
@@ -204,11 +213,20 @@ const get_divisors_optimized = (input) => {
   return divisors;
 };
 
-console.log(get_divisors(15));
-console.log(get_divisors_optimized(15));
+console.log("get_divisors = ", get_divisors(15));
+console.log("get_divisors_optimized = ", get_divisors_optimized(15));
 
 // Problem Statement: Given an integer N, check whether it is prime or not.
 // A prime number is a number that is only divisible by 1 and itself and the total number of divisors is 2.
+
+// Example 1:
+// Input:N = 2
+// Output:True
+// Explanation: 2 is a prime number because it has two divisors: 1 and 2 (the number itself).
+// Example 2:
+// Input:N =10
+// Output: False
+// Explanation: 10 is not prime, it is a composite number because it has 4 divisors: 1, 2, 5 and 10.
 
 const check_prime = (input) => {
   if (input === 1) return false;
@@ -247,5 +265,5 @@ const check_prime_optimized = (input) => {
   return true;
 };
 
-console.log(check_prime(113));
-console.log(check_prime_optimized(113));
+console.log("check_prime = ", check_prime(113));
+console.log("check_prime_optimized = ", check_prime_optimized(113));
