@@ -170,3 +170,82 @@ const check_armstrong_number = (input) => {
 };
 
 console.log(check_armstrong_number(371));
+
+// Problem Statement: Given an integer N, return all divisors of N.
+// A divisor of an integer N is a positive integer that divides N without leaving a remainder.
+// In other words, if N is divisible by another integer without any remainder, then that integer
+// is considered a divisor of N.
+
+const get_divisors = (input) => {
+  const divisors = [];
+  let count = 1;
+  while (count <= input) {
+    if (input % count === 0) {
+      divisors.push(count);
+    }
+    count++;
+  }
+  return divisors;
+};
+
+const get_divisors_optimized = (input) => {
+  const divisors = [];
+  const root = Math.floor(Math.sqrt(input));
+  let count = 1;
+  while (count <= root) {
+    if (input % count === 0) {
+      divisors.push(count);
+      if (input / count !== count) {
+        divisors.push(input / count);
+      }
+    }
+    count++;
+  }
+  return divisors;
+};
+
+console.log(get_divisors(15));
+console.log(get_divisors_optimized(15));
+
+// Problem Statement: Given an integer N, check whether it is prime or not.
+// A prime number is a number that is only divisible by 1 and itself and the total number of divisors is 2.
+
+const check_prime = (input) => {
+  if (input === 1) return false;
+  let count = 1;
+
+  let counter = 1;
+
+  while (counter <= input) {
+    if (count > 2) return false;
+    if (input % counter === 0) {
+      count++;
+    }
+    counter++;
+  }
+
+  return true;
+};
+
+const check_prime_optimized = (input) => {
+  if (input === 1) return false;
+
+  const root = Math.floor(Math.sqrt(input));
+  let counter = 1;
+  let count = 0;
+
+  while (counter <= root) {
+    if (input % counter === 0) {
+      count++;
+      if (input / count !== count) {
+        count++;
+      }
+    }
+    counter++;
+    if (count > 2) return false;
+  }
+  return true;
+};
+
+console.log(check_prime(113));
+console.log(check_prime_optimized(113));
