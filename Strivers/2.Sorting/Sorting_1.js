@@ -20,11 +20,11 @@ const selection_sort = (arr) => {
       if (arr[j] < arr[min_index]) {
         min_index = j;
       }
-      if (min_index !== i) {
-        temp = arr[min_index];
-        arr[min_index] = arr[i];
-        arr[i] = temp;
-      }
+    }
+    if (min_index !== i) {
+      temp = arr[min_index];
+      arr[min_index] = arr[i];
+      arr[i] = temp;
     }
   }
   return arr;
@@ -36,7 +36,7 @@ console.log(selection_sort([1, 2, 3, 6, 2, 1]));
 const bubble_sort = (arr) => {
   let temp;
   for (let i = arr.length - 1; i > 0; i--) {
-    for (let j = 0; j <= i; j++) {
+    for (let j = 0; j < i; j++) {
       if (arr[j] > arr[j + 1]) {
         temp = arr[j + 1];
         arr[j + 1] = arr[j];
@@ -50,4 +50,19 @@ const bubble_sort = (arr) => {
 console.log(bubble_sort([1, 2, 3, 6, 2, 1]));
 
 //insertion
-const insertion_sort = (arr) => {};
+const insertion_sort = (arr) => {
+  let count;
+  let temp;
+  for (let i = 0; i < arr.length; i++) {
+    count = i + 1;
+    while (count > 0 && arr[count] <= arr[count - 1]) {
+      temp = arr[count];
+      arr[count] = arr[count - 1];
+      arr[count - 1] = temp;
+      count--;
+    }
+  }
+  return arr;
+};
+
+console.log(insertion_sort([2, 1, 3, 6, 2, 1]));
