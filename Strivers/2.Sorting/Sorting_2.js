@@ -1,7 +1,6 @@
 //merge
 
 const merge = (arr, start, mid, end) => {
-  console.log("mergee", start, mid, end);
   let counter1 = start,
     counter2 = mid + 1;
   const temp = [];
@@ -38,9 +37,9 @@ const merge = (arr, start, mid, end) => {
 const merge_sort = (arr, start, end) => {
   if (start >= end) return;
   const mid = Math.floor((start + end) / 2);
-  console.log("leftttt");
+
   merge_sort(arr, start, mid);
-  console.log("righttt");
+
   merge_sort(arr, mid + 1, end);
   merge(arr, start, mid, end);
   return arr;
