@@ -105,3 +105,85 @@ const remove_dublicates_sorted = (arr) => {
 };
 
 console.log(remove_dublicates_sorted([1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4]));
+
+//Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+// Example 1:
+
+// Input: nums = [1,2,3,4,5,6,7], k = 3
+// Output: [5,6,7,1,2,3,4]
+// Explanation:
+// rotate 1 steps to the right: [7,1,2,3,4,5,6]
+// rotate 2 steps to the right: [6,7,1,2,3,4,5]
+// rotate 3 steps to the right: [5,6,7,1,2,3,4]
+// Example 2:
+
+// Input: nums = [-1,-100,3,99], k = 2
+// Output: [3,99,-1,-100]
+// Explanation:
+// rotate 1 steps to the right: [99,-1,-100,3]
+// rotate 2 steps to the right: [3,99,-1,-100]
+
+const rotate_arr = (arr, k) => {
+  k = k % arr.length;
+
+  const reverse = (arr, start, end) => {
+    let reverse_temp;
+
+    while (start < end) {
+      reverse_temp = arr[start];
+      arr[start] = arr[end];
+      arr[end] = reverse_temp;
+      start++;
+      end--;
+    }
+  };
+
+  reverse(arr, 0, arr.length - 1);
+  reverse(arr, 0, k - 1);
+  reverse(arr, k, arr.length - 1);
+  return arr;
+};
+
+console.log(rotate_arr([1, 2, 3, 4, 5, 6, 7], 3));
+
+//Problem Statement: You are given an array of integers, your task is to move all the zeros
+//in the array to the end of the array and move non-negative integers to the front by maintaining their order.
+
+const move_zeros_to_end = (arr) => {
+  let start = 0,
+    end = 0;
+  let temp;
+  while (end < arr.length) {
+    if (arr[end] !== 0) {
+      temp = arr[end];
+      arr[end] = arr[start];
+      arr[start] = temp;
+      end++;
+      start++;
+    } else {
+      end++;
+    }
+  }
+  return arr;
+};
+
+console.log(move_zeros_to_end([1, 0, 2, 3, 0, 4, 0, 1]));
+
+const binary_serach = (sorted_arr, num) => {
+  let start = 0,
+    end = sorted_arr.length - 1;
+  let mean;
+  while (start <= end) {
+    mean = Math.floor((start + end) / 2);
+    if (sorted_arr[mean] === num) {
+      return mean;
+    } else if (num < sorted_arr[mean]) {
+      end = mean - 1;
+    } else {
+      start = mean + 1;
+    }
+  }
+  return -1;
+};
+
+console.log(binary_serach([1, 2, 3], 3));
