@@ -399,3 +399,40 @@ const find_single_number_suing_xor = (arr) => {
 
 console.log("find_single_number =>", find_single_number([2, 2, 1]));
 console.log("find_single_number_suing_xor => ", find_single_number_suing_xor([2, 2, 1]));
+
+//Problem Statement: Given an array and a sum k, we need to print the length of the longest subarray that sums to k.
+
+// Example 1:
+// Input Format: N = 3, k = 5, array[] = {2,3,5}
+// Result: 2
+// Explanation: The longest subarray with sum 5 is {2, 3}. And its length is 2.
+
+// Example 2:
+// Input Format: N = 5, k = 10, array[] = {2,3,5,1,9}
+// Result: 3
+// Explanation: The longest subarray with sum 10 is {2, 3, 5}. And its length is 3.
+
+const len_of_long_sub_arr_pos = (arr, k) => {
+  let min = 0,
+    max = 0;
+  let sum = arr[0];
+  let count = 0;
+
+  while (min < arr.length && max < arr.length) {
+    if (sum === k) {
+      count = Math.max(count, max - min + 1);
+      max++;
+      if (max < arr.length) sum += arr[max];
+    } else if (sum > k) {
+      sum -= arr[min];
+      min++;
+    } else {
+      max++;
+      if (max < arr.length) sum += arr[max];
+    }
+  }
+
+  return count;
+};
+
+console.log("len_of_long_sub_arr_pos => ", len_of_long_sub_arr_pos([2, 3, 5, 1, 9], 10));
