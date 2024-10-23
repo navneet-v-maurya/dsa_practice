@@ -436,3 +436,35 @@ const len_of_long_sub_arr_pos = (arr, k) => {
 };
 
 console.log("len_of_long_sub_arr_pos => ", len_of_long_sub_arr_pos([2, 3, 5, 1, 9], 10));
+
+const len_of_long_sub_arr_pos_neg = (arr, k) => {
+  const map = new Map();
+  let sum = 0;
+  let temp;
+  let count = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+
+    if (sum === k) {
+      count = Math.max(i + 1, count);
+    }
+
+    temp = sum - k;
+    const found = map.get(temp);
+
+    if (found !== undefined) {
+      count = Math.max(count, i - found);
+    }
+    if (map.get(sum) === undefined) {
+      map.set(sum, i);
+    }
+  }
+
+  return count;
+};
+
+console.log(
+  "len_of_long_sub_arr_pos_neg => ",
+  len_of_long_sub_arr_pos_neg([-14, 10, -15, 17, 4, 18, 3, -18, -7, -4, -8, 8, -8], 12)
+);
