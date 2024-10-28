@@ -113,7 +113,9 @@ console.log(sort_colors([2, 0, 2, 1, 1, 0]));
 
 // Explanation:
 //  Array has only one element and which is giving positive sum of 1.
-const kadanes_algorithm = (arr) => {};
+const kdanes_algorithm = (arr) => {
+  //remaining because of sickness
+};
 
 //Problem Statement: Given an array of N integers, write a program to return an element that occurs more than N/2 times in the
 //given array. You may consider that such an element always exists in the array.
