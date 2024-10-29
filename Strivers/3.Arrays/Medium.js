@@ -113,9 +113,33 @@ console.log(sort_colors([2, 0, 2, 1, 1, 0]));
 
 // Explanation:
 //  Array has only one element and which is giving positive sum of 1.
-const kdanes_algorithm = (arr) => {
-  //remaining because of sickness
+const kadane_algorithm = (arr) => {
+  let sum = 0;
+  let greatest_sum = -Infinity;
+  let start = 0,
+    temp_start = 0,
+    end = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+
+    if (sum > greatest_sum) {
+      greatest_sum = sum;
+      start = temp_start;
+      end = i;
+    }
+
+    if (sum < 0) {
+      sum = 0;
+      temp_start = i + 1;
+    }
+  }
+
+  const sub_arr = arr.slice(start, end + 1);
+  return { greatest_sum, sub_arr };
 };
+
+console.log(kadane_algorithm([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
 
 //Problem Statement: Given an array of N integers, write a program to return an element that occurs more than N/2 times in the
 //given array. You may consider that such an element always exists in the array.
@@ -163,3 +187,46 @@ const majority_element = (arr) => {
 };
 
 console.log(majority_element([2, 2, 1, 1, 1, 2, 2]));
+
+//Problem Statement: You are given an array of prices where prices[i] is the price of a given stock on an ith day.
+
+// Example 1:
+// Input:
+//  prices = [7,1,5,3,6,4]
+// Output:
+//  5
+// Explanation:
+//  Buy on day 2 (price = 1) and
+// sell on day 5 (price = 6), profit = 6-1 = 5.
+
+// Note
+// : That buying on day 2 and selling on day 1
+// is not allowed because you must buy before
+// you sell.
+
+// Example 2:
+// Input:
+//  prices = [7,6,4,3,1]
+// Output:
+//  0
+// Explanation:
+//  In this case, no transactions are
+// done and the max profit = 0.
+
+const stock = (arr) => {
+  let buy = arr[0];
+  let profit = 0;
+
+  for (let i = 1; i < arr.length; i++) {
+    if (buy > arr[i]) {
+      buy = arr[i];
+    } else {
+      if (arr[i] - buy > profit) {
+        profit = arr[i] - buy;
+      }
+    }
+  }
+  return profit;
+};
+
+console.log(stock([7, 1, 5, 3, 6, 4]));
