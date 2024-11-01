@@ -285,3 +285,158 @@ const rearrange_array = (arr) => {
 };
 
 console.log(rearrange_array([3, 1, -2, -5, 2, -4]));
+
+//Problem Statement: Given an array, print all the elements which are leaders. A Leader is an element that is greater than all of the elements on its right side in the array.
+
+// Example 1:
+// Input:
+
+//  arr = [4, 7, 1, 0]
+// Output
+// :
+//  7 1 0
+// Explanation:
+
+//  Rightmost element is always a leader. 7 and 1 are greater than the elements in their right side.
+
+// Example 2:
+// Input:
+
+//  arr = [10, 22, 12, 3, 0, 6]
+// Output:
+
+//  22 12 6
+// Explanation:
+
+//  6 is a leader. In addition to that, 12 is greater than all the elements in its right side (3, 0, 6), also 22 is greater than 12, 3, 0, 6.
+
+const get_leader = (arr) => {
+  let highest = arr[arr.length - 1];
+  const leaders = [highest];
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] > highest) {
+      leaders.push(arr[i]);
+      highest = arr[i];
+    }
+  }
+  return leaders;
+};
+
+console.log(get_leader([4, 7, 1, 0]));
+
+//Problem Statement: You are given an array of ‘N’ integers. You need to find the length of the longest sequence which contains the consecutive elements.
+
+// Example 1:
+// Input:
+//  [100, 200, 1, 3, 2, 4]
+
+// Output:
+//  4
+
+// Explanation:
+//  The longest consecutive subsequence is 1, 2, 3, and 4.
+
+// Input:
+//  [3, 8, 5, 7, 6]
+
+// Output:
+//  4
+
+// Explanation:
+//  The longest consecutive subsequence is 5, 6, 7, and 8.
+
+const longest_consecutive = (arr) => {
+  const st = new Set();
+  let count = 0;
+  let longest = 0;
+  let temp;
+
+  for (let i = 0; i < arr.length; i++) {
+    st.add(arr[i]);
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (st.has(arr[i] - 1)) {
+      count = 0;
+    } else {
+      count = arr[i];
+      while (st.has(count)) {
+        count++;
+      }
+
+      count = count - arr[i];
+
+      if (count > longest) {
+        longest = count;
+      }
+    }
+  }
+  return longest;
+};
+
+console.log(longest_consecutive([100, 200, 1, 3, 5, 7]));
+
+//Problem Statement: Given a matrix if an element in the matrix is 0 then you will have to set its entire column and row to 0 and then return the matrix.
+
+// Examples 1:
+// Input:
+//  matrix=[[1,1,1],[1,0,1],[1,1,1]]
+
+// Output:
+//  [[1,0,1],[0,0,0],[1,0,1]]
+
+// Explanation:
+//  Since matrix[2][2]=0.Therfore the 2nd column and 2nd row wil be set to 0.
+
+// Input:
+//  matrix=[[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+
+// Output:
+// [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+
+// Explanation:
+// Since matrix[0][0]=0 and matrix[0][3]=0. Therefore 1st row, 1st column and 4th column will be set to 0
+
+const set_zeros = (matrix) => {
+  const row_map = new Map();
+  const col_map = new Map();
+  let row_found, col_found;
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] === 0) {
+        row_map.set(i, i);
+        col_map.set(j, j);
+      }
+    }
+  }
+
+  for (let i = 0; i < matrix.length; i++) {
+    row_found = row_map.get(i);
+
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (row_found !== undefined) {
+        matrix[i][j] = 0;
+      } else {
+        col_found = col_map.get(j);
+        if (col_found !== undefined) {
+          matrix[i][j] = 0;
+        }
+        col_found = undefined;
+      }
+    }
+
+    row_found = undefined;
+  }
+
+  return matrix;
+}; // still need space optimization
+
+console.log(
+  set_zeros([
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+  ])
+);
