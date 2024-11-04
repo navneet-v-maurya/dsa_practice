@@ -524,4 +524,87 @@ console.log(
 // Output: 1, 2, 3, 6, 9, 8, 7, 4, 5.
 // Explanation: The output of matrix in spiral form.
 
-const spiral_order = (matrix) => {};
+const spiral_order = (matrix) => {
+  const arr = [];
+  let top = 0,
+    bottom = matrix.length - 1,
+    left = 0,
+    right = matrix[0].length - 1;
+
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i++) {
+      arr.push(matrix[top][i]);
+    }
+    top++;
+
+    for (let i = top; i <= bottom; i++) {
+      arr.push(matrix[i][right]);
+    }
+    right--;
+
+    if (top <= bottom) {
+      for (let i = right; i >= left; i--) {
+        arr.push(matrix[bottom][i]);
+      }
+
+      bottom--;
+    }
+
+    if (left <= right) {
+      for (let i = bottom; i >= top; i--) {
+        arr.push(matrix[i][left]);
+      }
+
+      left++;
+    }
+  }
+
+  return arr;
+};
+
+console.log(
+  spiral_order([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ])
+);
+
+//Problem Statement: Given an array of integers and an integer k, return the total number of subarrays whose sum equals k.
+
+// Example 1:
+// Input Format:
+//  N = 4, array[] = {3, 1, 2, 4}, k = 6
+// Result:
+//  2
+// Explanation:
+//  The subarrays that sum up to 6 are [3, 1, 2] and [2, 4].
+
+// Example 2:
+// Input Format:
+//  N = 3, array[] = {1,2,3}, k = 3
+// Result:
+//  2
+// Explanation:
+//  The subarrays that sum up to 3 are [1, 2], and [3].
+
+const total_sub_arr = (nums, k) => {
+  let sum = 0;
+  let count = 0;
+  let map = new Map();
+  map.set(0, 1);
+
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i];
+    let rem = sum - k;
+
+    if (map.has(rem)) {
+      count += map.get(rem);
+    }
+    map.set(sum, (map.get(sum) || 0) + 1);
+  }
+
+  return count;
+};
+
+console.log(total_sub_arr([-1, -1, 1], 0));
