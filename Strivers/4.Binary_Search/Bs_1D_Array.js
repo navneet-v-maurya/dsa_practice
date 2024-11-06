@@ -74,3 +74,92 @@ const get_bounds = (arr, target) => {
 };
 
 console.log(get_bounds([10143, 29122, 30010], 23112));
+
+//Problem Statement: You are given a sorted array arr of distinct values and a target value x. You need to search for the index of the target value in the array.
+
+// Example 1:
+// Input Format: arr[] = {1,2,4,7}, x = 6
+// Result: 3
+// Explanation: 6 is not present in the array. So, if we will insert 6 in the 3rd index(0-based indexing), the array will still be sorted. {1,2,4,6,7}.
+
+// Example 2:
+// Input Format: arr[] = {1,2,4,7}, x = 2
+// Result: 1
+// Explanation: 2 is present in the array and so we will return its index i.e. 1.
+
+const search_insert = (nums, target) => {
+  let start = 0;
+  let end = nums.length - 1;
+  let mid = 0;
+  let ans = end;
+
+  if (target > nums[end]) return end + 1;
+  if (target < nums[start]) return 0;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (nums[mid] === target) return mid;
+
+    if (nums[mid] > target) {
+      ans = mid;
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+  }
+  return ans;
+};
+
+console.log(search_insert([1, 2, 4, 7], 2));
+
+//Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+
+// Example 1:
+
+// Input: nums = [5,7,7,8,8,10], target = 8
+// Output: [3,4]
+// Example 2:
+
+// Input: nums = [5,7,7,8,8,10], target = 6
+// Output: [-1,-1]
+// Example 3:
+
+// Input: nums = [], target = 0
+// Output: [-1,-1]
+
+const search_range = (nums, target) => {
+  let start = 0;
+  let end = nums.length - 1;
+  let mid;
+  let found = false;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (target === nums[mid]) {
+      found = true;
+      break;
+    } else if (target < nums[mid]) {
+      end = mid - 1;
+    } else if (target > nums[mid]) {
+      start = mid + 1;
+    }
+  }
+
+  if (!found) return [-1, -1];
+
+  let left = mid,
+    right = mid;
+
+  while (nums[left] === target || nums[right] === target) {
+    if (nums[left] === target) {
+      left--;
+    }
+
+    if (nums[right] === target) {
+      right++;
+    }
+  }
+  return [left + 1, right - 1];
+};
+
+console.log(search_range([1, 2, 2, 2, 2, 2, 4, 7], 2));
