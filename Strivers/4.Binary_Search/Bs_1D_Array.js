@@ -163,3 +163,125 @@ const search_range = (nums, target) => {
 };
 
 console.log(search_range([1, 2, 2, 2, 2, 2, 4, 7], 2));
+
+//Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values) and a target value k.
+// Now the array is rotated at some pivot point unknown to you. Find the index at which k is present and if k is not present return -1.
+
+// Example 1:
+// Input Format: arr = [4,5,6,7,0,1,2,3], k = 0
+// Result: 4
+// Explanation: Here, the target is 0. We can see that 0 is present in the given rotated sorted array, nums. Thus, we get output as 4, which is the index at which 0 is present in the array.
+
+// Example 2:
+// Input Format: arr = [4,5,6,7,0,1,2], k = 3
+// Result: -1
+// Explanation: Here, the target is 3. Since 3 is not present in the given rotated sorted array. Thus, we get the output as -1.
+
+//O(N)
+const search_rotated_sorted = (nums, target) => {
+  let pivot = 0;
+
+  while (nums[pivot] < nums[pivot + 1]) {
+    pivot++;
+  }
+
+  let start, end, mid;
+  if (pivot === nums.length - 1) {
+    start = 0;
+    end = nums.length - 1;
+  } else if (nums[pivot] > target && target >= nums[0]) {
+    start = 0;
+    end = pivot;
+  } else {
+    start = pivot + 1;
+    end = nums.length - 1;
+  }
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (target === nums[mid]) {
+      return mid;
+    } else if (target < nums[mid]) {
+      end = mid - 1;
+    } else if (target > nums[mid]) {
+      start = mid + 1;
+    }
+  }
+  return -1;
+};
+
+//O(log(n))
+const search_rotated_sorted_otpimized = (arr, target) => {
+  let start = 0,
+    end = arr.length - 1,
+    mid;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+
+    if (arr[mid] === target) return mid;
+
+    if (arr[start] <= arr[mid]) {
+      if (target >= arr[start] && target < arr[mid]) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    } else {
+      if (arr[mid] <= target && target <= arr[end]) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+  }
+  return -1;
+};
+
+console.log(search_rotated_sorted([3, 5, 1], 3));
+console.log(search_rotated_sorted_otpimized([3, 5, 1], 3));
+
+//Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values). Now the array is
+//rotated between 1 to N times which is unknown. Find the minimum element in the array.
+
+// Example 1:
+// Input Format:
+//  arr = [4,5,6,7,0,1,2,3]
+// Result:
+//  0
+// Explanation:
+//  Here, the element 0 is the minimum element in the array.
+
+// Example 2:
+// Input Format:
+//  arr = [3,4,5,1,2]
+// Result:
+//  1
+// Explanation:
+//  Here, the element 1 is the minimum element in the array.
+
+const find_min_rotated = (arr) => {
+  let start = 0,
+    end = arr.length - 1,
+    mid;
+
+  if (arr[end] >= arr[start]) return arr[start];
+
+  let min = arr[start];
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+
+    if (arr[mid] >= min) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+
+    if (arr[mid] < min) min = arr[mid];
+  }
+
+  return min;
+};
+
+console.log(find_min_rotated([3, 5, 1]));
