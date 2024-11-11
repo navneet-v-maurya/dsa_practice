@@ -310,7 +310,25 @@ console.log(find_min_rotated([3, 5, 1]));
 // Result: 0
 // Explanation: In this example, there is only 1 peak that is at the index 0.
 
-const peak_element = (arr) => {};
+const peak_element = (arr) => {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) {
+      return mid;
+    } else if (arr[mid + 1] > arr[mid]) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+  return start === 0 ? 0 : arr.length - 1;
+};
+
+console.log(peak_element([1, 2, 1, 3, 5, 6, 4]));
 
 //Problem Statement: Given an array of N integers. Every number in the array except one appears twice. Find the single number in the array.
 
