@@ -72,11 +72,13 @@ class Singly_linked_list {
   }
 }
 
-const sl = new Singly_linked_list();
-sl.push(1);
-sl.push_arr([2, 3]);
-sl.push(4);
-console.log(sl.get_size());
-console.log(sl.search(5));
+module.exports = Singly_linked_list;
 
-console.log(sl);
+// const sl = new Singly_linked_list();
+// sl.push(1);
+// sl.push_arr([2, 3]);
+// sl.push(4);
+// console.log(sl.get_size());
+// console.log(sl.search(5));
+
+// console.log(sl);
