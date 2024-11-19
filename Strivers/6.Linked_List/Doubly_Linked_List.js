@@ -102,12 +102,30 @@ class Doubly_linked_list {
 
     return this.head;
   }
+
+  reverseDLL() {
+    let curr = this.head;
+    let prev = null;
+    let temp = null;
+
+    while (curr) {
+      temp = curr.next;
+      curr.next = prev;
+      curr.prev = temp;
+
+      prev = curr;
+      curr = temp;
+    }
+
+    this.head = prev;
+
+    return this.head;
+  }
 }
 
 const db = new Doubly_linked_list();
 
 db.push_arr([1, 2, 3]);
-db.add_after_index(2, 0);
 db.print();
-db.delete_nth_node(3);
+db.reverseDLL();
 db.print();

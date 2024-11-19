@@ -70,6 +70,19 @@ class Singly_linked_list {
     }
     return false;
   }
+
+  reverse() {
+    let prev = null;
+    let curr = this.head;
+    let temp;
+    while (curr) {
+      temp = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = temp;
+    }
+    this.head = prev;
+  }
 }
 
 module.exports = Singly_linked_list;
