@@ -3,6 +3,8 @@ const Singly_linked_list = require("./Singly_Linked_List");
 const sl = new Singly_linked_list();
 
 sl.push_arr([1, 2, 3, 4, 5, 6]);
+sl.reverse();
+console.log(sl);
 
 //Problem Statement: Given the head of a linked list of integers, determine the middle node of the linked list.
 // However, if the linked list has an even number of nodes, return the second middle node.
@@ -30,4 +32,29 @@ const middle_node = (head) => {
 };
 
 console.log(middle_node(sl.head));
-console.log(sl);
+
+//Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+// Input: head = [3,2,0,-4], pos = 1
+// Output: true
+// Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+// Input: head = [1], pos = -1
+// Output: false
+// Explanation: There is no cycle in the linked list.
+
+const has_loop = () => {
+  let slow = this.head;
+  let fast = this.head;
+
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (fast === slow) {
+      return true;
+    }
+  }
+  return false;
+};
+
+console.log(has_loop(sl.head));
