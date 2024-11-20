@@ -83,6 +83,22 @@ class Singly_linked_list {
     }
     this.head = prev;
   }
+
+  create_loop_at_index(index) {
+    let temp1 = this.head;
+    let temp2 = this.head;
+    let count = 0;
+
+    while (temp1.next) {
+      temp1 = temp1.next;
+      if (count < index) {
+        temp2 = temp2.next;
+      }
+      count++;
+    }
+
+    temp1.next = temp2;
+  }
 }
 
 module.exports = Singly_linked_list;
