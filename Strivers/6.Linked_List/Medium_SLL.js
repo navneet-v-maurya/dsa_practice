@@ -154,3 +154,4 @@ const is_palindrome = (head) => {
 };
 
 console.log(is_palindrome(sl.head));
+

@@ -123,9 +123,11 @@ class Doubly_linked_list {
   }
 }
 
-const db = new Doubly_linked_list();
+module.exports = Doubly_linked_list;
 
-db.push_arr([1, 2, 3]);
-db.print();
-db.reverseDLL();
-db.print();
+// const db = new Doubly_linked_list();
+
+// db.push_arr([1, 2, 3]);
+// db.print();
+// db.reverseDLL();
+// db.print();
