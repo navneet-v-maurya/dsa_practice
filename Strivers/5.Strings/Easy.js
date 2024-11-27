@@ -117,3 +117,33 @@ const is_isomorphic = (s, t) => {
 };
 
 console.log(is_isomorphic("paper", "title"));
+
+const is_anagram = (s, t) => {
+  if (s.length !== t.length) return false;
+  const arr = new Array(26);
+  arr.fill(0);
+
+  const get_index = (char) => {
+    if (char.length !== 1 || char < "a" || char > "z") {
+      return -1;
+    }
+    return char.charCodeAt(0) - "a".charCodeAt(0);
+  };
+
+  let index1, index2;
+  for (let i = 0; i < s.length; i++) {
+    index1 = get_index(s[i]);
+    index2 = get_index(t[i]);
+    arr[index1] = arr[index1] + 1;
+    arr[index2] = arr[index2] - 1;
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== 0) {
+      return false;
+    }
+  }
+  return true;
+};
+
+console.log(is_anagram("dgqztusjuu", "dqugjzutsu"));
