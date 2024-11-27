@@ -147,3 +147,12 @@ const is_anagram = (s, t) => {
 };
 
 console.log(is_anagram("dgqztusjuu", "dqugjzutsu"));
+
+const rotate_string = (s, goal) => {
+  if (s.length !== goal.length) return false;
+  if ((s + s).includes(goal)) return true;
+
+  return false;
+};
+
+console.log(rotate_string("abcde", "cdeab"));
