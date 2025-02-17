@@ -46,3 +46,39 @@ const roman_to_int = (s) => {
 };
 
 console.log(roman_to_int("MCMXCIV"));
+
+const check_inclusion = (s1, s2) => {
+  if (s1.length > s2.length) return false;
+  const counter1 = new Array(26);
+  const counter2 = new Array(26);
+
+  counter1.fill(0);
+  counter2.fill(0);
+  let index1, index2;
+
+  for (let i = 0; i < s1.length; i++) {
+    console.log(s1.charCodeAt(i) - 97, s2.charCodeAt(i) - 97);
+    index1 = s1.charCodeAt(i) - 97;
+    index2 = s2.charCodeAt(i) - 97;
+    counter1[index1] = counter1[index1] + 1;
+    counter2[index2] = counter2[index2] + 1;
+  }
+
+  const is_matched = () => {
+    for (let i = 0; i < 26; i++) {
+      if (counter1[i] !== counter2[i]) return false;
+    }
+    return true;
+  };
+
+  for (let i = 0; i < s2.length - s1.length + 1; i++) {
+    if (is_matched()) return true;
+    index2 = s2.charCodeAt(i) - 97;
+    counter2[index2] = counter2[index2] - 1;
+    counter2[s2.charCodeAt(i + s1.length) - 97] = counter2[s2.charCodeAt(i + s1.length) - 97] + 1;
+  }
+
+  return false;
+};
+
+console.log(check_inclusion("ab", "eidbaooo"));

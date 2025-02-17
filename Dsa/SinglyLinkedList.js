@@ -191,3 +191,5 @@ merger_sorted_lists = (l1, l2) => {
 };
 
 console.log(merger_sorted_lists(singly1.head, singly2.head));
+
+module.exports = SinglyLinkedList;
