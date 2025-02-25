@@ -134,3 +134,61 @@ console.log(
     41, 88, 58, 69, 93, 42, 44, 25, 12, 47, 41, 88, 58, 69, 93, 42, 44, 25, 12, 47,
   ])
 );
+
+const prevLargerElement = (arr) => {
+  const stack = [];
+  const res = new Array(arr.length);
+
+  for (let i = 0; i < arr.length; i++) {
+    if (stack.length === 0) {
+      res[i] = -1;
+    } else if (stack.length > 0 && stack[stack.length - 1] > arr[i]) {
+      res[i] = stack[stack.length - 1];
+    } else {
+      while (stack.length > 0 && stack[stack.length - 1] <= arr[i]) {
+        stack.pop();
+      }
+
+      if (stack.length === 0) {
+        res[i] = -1;
+      } else {
+        res[i] = stack[stack.length - 1];
+      }
+    }
+
+    stack.push(arr[i]);
+  }
+
+  return res;
+};
+
+console.log(prevLargerElement([1, 3, 2, 4]));
+
+const prevSmallerElement = (arr) => {
+  const stack = [];
+  const res = new Array(arr.length);
+
+  for (let i = 0; i < arr.length; i++) {
+    if (stack.length === 0) {
+      res[i] = -1;
+    } else if (stack.length > 0 && stack[stack.length - 1] < arr[i]) {
+      res[i] = stack[stack.length - 1];
+    } else {
+      while (stack.length > 0 && stack[stack.length - 1] >= arr[i]) {
+        stack.pop();
+      }
+
+      if (stack.length === 0) {
+        res[i] = -1;
+      } else {
+        res[i] = stack[stack.length - 1];
+      }
+    }
+
+    stack.push(arr[i]);
+  }
+
+  return res;
+};
+
+console.log(prevSmallerElement([4, 5, 2, 10, 8]));
