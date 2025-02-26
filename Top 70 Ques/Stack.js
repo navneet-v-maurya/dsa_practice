@@ -162,7 +162,7 @@ const prevLargerElement = (arr) => {
   return res;
 };
 
-console.log(prevLargerElement([1, 3, 2, 4]));
+console.log("prevLargerElement=> ", prevLargerElement([1, 3, 2, 4]));
 
 const prevSmallerElement = (arr) => {
   const stack = [];
@@ -192,3 +192,50 @@ const prevSmallerElement = (arr) => {
 };
 
 console.log(prevSmallerElement([4, 5, 2, 10, 8]));
+
+// The stock span problem is a financial problem where we have a series of daily price quotes for a stock and we need to
+// calculate the span of stock price for all days. The span arr[i] of the stocks price on a given day i is defined as the
+// maximum number of consecutive days just before the given day, for which the price of the stock on the given day is less than
+// or equal to its price on the current day.
+
+const calculateStockSpan_brute = (arr) => {
+  const res = new Array(arr.length);
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (arr[j] >= arr[i]) {
+        res[i] = i - j;
+        break;
+      }
+    }
+    if (!res[i]) {
+      res[i] = i + 1;
+    }
+  }
+  return res;
+};
+
+console.log(calculateStockSpan_brute([100, 80, 60, 70, 60, 75, 85]));
+
+const calculateStockSpan = (arr) => {
+  const res = new Array(arr.length);
+  const stack = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    while (stack.length > 0 && stack[stack.length - 1][0] <= arr[i]) {
+      stack.pop();
+    }
+
+    if (stack.length === 0) {
+      res[i] = i + 1;
+    } else {
+      res[i] = i - stack[stack.length - 1][1];
+    }
+
+    stack.push([arr[i], i]);
+  }
+
+  return res;
+};
+
+console.log(calculateStockSpan([21473, 14891, 26474, 2116]));
