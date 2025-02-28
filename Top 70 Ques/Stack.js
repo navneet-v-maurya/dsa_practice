@@ -215,7 +215,7 @@ const calculateStockSpan_brute = (arr) => {
   return res;
 };
 
-console.log(calculateStockSpan_brute([100, 80, 60, 70, 60, 75, 85]));
+console.log(calculateStockSpan_brute([21473, 14891, 26474, 2116]));
 
 const calculateStockSpan = (arr) => {
   const res = new Array(arr.length);
@@ -239,3 +239,54 @@ const calculateStockSpan = (arr) => {
 };
 
 console.log(calculateStockSpan([21473, 14891, 26474, 2116]));
+
+const max_area_histogram = (arr) => {
+  let largest_area = 0;
+
+  let prev_stack = [];
+  let next_stack = [];
+  let prev_small_index_arr = new Array(arr.length),
+    next_small_index_arr = new Array(arr.length);
+
+  //prev small
+  for (let i = 0; i < arr.length; i++) {
+    while (prev_stack.length > 0 && prev_stack[prev_stack.length - 1].val >= arr[i]) {
+      prev_stack.pop();
+    }
+
+    if (prev_stack.length === 0) {
+      prev_small_index_arr[i] = -1; // FIXED
+    } else {
+      prev_small_index_arr[i] = prev_stack[prev_stack.length - 1].index;
+    }
+
+    prev_stack.push({ val: arr[i], index: i });
+  }
+
+  //next small
+  for (let i = arr.length - 1; i >= 0; i--) {
+    while (next_stack.length > 0 && next_stack[next_stack.length - 1].val >= arr[i]) {
+      next_stack.pop();
+    }
+
+    if (next_stack.length === 0) {
+      next_small_index_arr[i] = arr.length; // FIXED
+    } else {
+      next_small_index_arr[i] = next_stack[next_stack.length - 1].index;
+    }
+    next_stack.push({ val: arr[i], index: i });
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    let width = next_small_index_arr[i] - prev_small_index_arr[i] - 1;
+    let area = width * arr[i];
+    largest_area = Math.max(largest_area, area);
+  }
+
+  console.log("Prev Small Index:", prev_small_index_arr);
+  console.log("Next Small Index:", next_small_index_arr);
+
+  return largest_area;
+};
+
+console.log(max_area_histogram([2, 1, 5, 6, 2, 3]));
