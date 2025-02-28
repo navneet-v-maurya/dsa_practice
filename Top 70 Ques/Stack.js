@@ -283,9 +283,6 @@ const max_area_histogram = (arr) => {
     largest_area = Math.max(largest_area, area);
   }
 
-  console.log("Prev Small Index:", prev_small_index_arr);
-  console.log("Next Small Index:", next_small_index_arr);
-
   return largest_area;
 };
 
