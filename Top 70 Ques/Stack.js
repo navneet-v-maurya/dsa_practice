@@ -48,7 +48,7 @@ console.log("stack with extra, TOP", st.top());
 console.log("stack with extra, MIN", st.get_min());
 console.log("***************************************************************************\n");
 
-class MinStackWithoutEtraSpace {
+class MinStackWithoutExtraSpace {
   constructor() {
     this.stack = [];
     this.min = null;
@@ -62,27 +62,29 @@ class MinStackWithoutEtraSpace {
       if (val >= this.min) {
         this.stack.push(val);
       } else {
-        this.min = val;
         this.stack.push(2 * val - this.min);
+        this.min = val;
       }
     }
-    return this.stack;
   }
 
   pop() {
     if (this.stack.length === 0) return null;
-    if (this.stack[this.stack.length - 1] >= this.min) {
-      return this.stack.pop();
-    } else {
-      const temp = this.stack.pop();
-      this.min = 2 * val - temp;
-      return 2 * val - temp;
+
+    const top = this.stack.pop();
+    if (top < this.min) {
+      const prevMin = this.min;
+      this.min = 2 * this.min - top;
+      return prevMin;
     }
+    return top;
   }
 
   top() {
     if (this.stack.length === 0) return null;
-    return this.stack[this.stack.length - 1];
+
+    const top = this.stack[this.stack.length - 1];
+    return top < this.min ? this.min : top;
   }
 
   get_min() {
