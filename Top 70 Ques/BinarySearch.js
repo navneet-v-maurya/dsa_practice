@@ -120,3 +120,34 @@ const count_of_el = (arr, el) => {
 };
 
 console.log("count_of_el => ", count_of_el([1, 2, 2, 2, 2, 2, 7, 7, 9], 2));
+
+//number of times sorted array is rotated
+
+const get_min_in_rotetd_arr = (arr) => {
+  let start = 0,
+    end = arr.length - 1;
+  let mid;
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+
+    if (arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+      return mid;
+    }
+
+    if (arr[mid + 1] < arr[mid]) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+
+  return -1;
+};
+
+console.log(get_min_in_rotetd_arr([4, 5, 6, 7, 0, 1, 2]));
+
+// find el in rotated sorted array
+// searching in a nearly sorted array
+// floor of an el in sorted array
+// ciel of an el in sorted array
+// next alphabetical el
