@@ -239,3 +239,11 @@ const floor_of_el = (arr, x) => {
 console.log("floor_of_el => ", floor_of_el([1, 1, 4, 4, 4, 4, 10], 4));
 
 // next alphabetical el
+//find el in infinite sorted array
+//index of first 1 in binary soreted infinite array
+//minimum difference elemt in sorted array
+//peak element
+//max element in bitonic array
+//search el in bitonic array
+//search in 2d sorted array
+//allocate min number of pages
