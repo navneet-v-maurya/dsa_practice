@@ -60,9 +60,9 @@ console.log(
 );
 
 //first occuerance of element
-const first_occurance_of_el = (arr, val) => {
-  let left = 0,
-    right = arr.length - 1;
+const first_occurance_of_el = (arr, val, start, end) => {
+  let left = start || 0,
+    right = end || arr.length - 1;
 
   let res = -1;
   let mid;
@@ -238,4 +238,69 @@ const floor_of_el = (arr, x) => {
 };
 console.log("floor_of_el => ", floor_of_el([1, 1, 4, 4, 4, 4, 10], 4));
 
+//find el in infinite sorted array
+const find_el_in_infinite_soted_arr = (arr, key) => {
+  let start = 0;
+  let end = 1;
+
+  while (true) {
+    if (arr[end] < key) {
+      start = end;
+      end = end * 2;
+    } else {
+      break;
+    }
+  }
+
+  return binary_search(arr, key, start, end);
+};
+
+console.log(
+  "find_el_in_infinite_soted_arr => ",
+  find_el_in_infinite_soted_arr([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)
+);
+
+//index of first 1 in binary soreted infinite array
+const first_occurance_of_el_infinite_arr = (arr, el = 1) => {
+  let start = 0;
+  let end = 1;
+
+  while (true) {
+    if (arr[end] < el) {
+      start = end;
+      end = end * 2;
+    } else {
+      break;
+    }
+  }
+
+  return first_occurance_of_el(arr, 1, start, end);
+};
+
+console.log(
+  "first_occurance_of_el_infinite_arr => ",
+  first_occurance_of_el_infinite_arr([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
+);
+
+//minimum difference elemt in sorted array
+
+const minimum_diff_el_in_sorted_arr = (arr, target) => {
+  const ciel = ciel_of_el(arr, target);
+  const floor = floor_of_el(arr, target);
+
+  if (Math.abs(arr[ciel] - target) < Math.abs(arr[floor] - target)) return arr[ciel];
+
+  return arr[floor];
+};
+
+console.log(
+  "minimum_diff_el_in_sorted_arr => ",
+  minimum_diff_el_in_sorted_arr([2, 5, 10, 12, 15], 2)
+);
+
+//peak element
+//max element in bitonic array
+//search el in bitonic array
+//search in 2d sorted array
+//allocate min number of pages
 // next alphabetical el
