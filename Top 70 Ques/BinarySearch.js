@@ -21,9 +21,9 @@ const binary_search = (arr, val, start = 0, end = arr.length - 1) => {
 console.log("binary_search => ", binary_search([1, 2, 3, 4, 5, 6, 7, 8, 9], 1, 1));
 
 //reverse array binary search
-const reverse_arr_binary_search = (arr, val) => {
-  let left = 0,
-    right = arr.length - 1;
+const reverse_arr_binary_search = (arr, val, start, end) => {
+  let left = start || 0,
+    right = end || arr.length - 1;
 
   let mid;
   while (left <= right) {
@@ -298,9 +298,67 @@ console.log(
   minimum_diff_el_in_sorted_arr([2, 5, 10, 12, 15], 2)
 );
 
-//peak element
 //max element in bitonic array
+const max_el_in_bitonic_arr = (arr) => {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid;
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (!arr[mid - 1] || !arr[mid + 1] || (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1])) {
+      return mid;
+    } else if (arr[mid] > arr[mid - 1]) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+
+  return -1;
+};
+
+console.log("max_el_in_bitonic_arr => ", max_el_in_bitonic_arr([5, 6, 7, 8, 9, 10, 3, 2, 1]));
+
 //search el in bitonic array
+const search_el_in_bitonic_arr = (arr, el) => {
+  const mid = max_el_in_bitonic_arr(arr);
+
+  const found1 = binary_search(arr, el, 0, mid);
+  const found2 = reverse_arr_binary_search(arr, el, mid + 1, arr.length - 1);
+
+  if (found1 !== -1) return found1;
+  if (found2 !== -1) return found2;
+
+  return -1;
+};
+
+console.log(
+  "search_el_in_bitonic_arr => ",
+  search_el_in_bitonic_arr([5, 6, 7, 8, 9, 10, 3, 2, 1], 1)
+);
+
+//peak element
+const find_peak_element = (nums) => {
+  let start = 0;
+  let end = nums.length - 1;
+
+  let mid;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
+      return mid;
+    } else if (nums[mid + 1] > nums[mid]) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+  return start === 0 ? 0 : nums.length - 1;
+};
+
+console.log("find_peak_element => ", find_peak_element([1, 2, 1, 3, 5, 6, 4]));
+
 //search in 2d sorted array
 //allocate min number of pages
 // next alphabetical el
