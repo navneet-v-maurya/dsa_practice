@@ -133,10 +133,12 @@ class MinHeapObj {
     let parent = Math.floor((child - 1) / 2);
 
     while (parent >= 0) {
-      if (this.values[parent].diff > this.values[child].diff) {
-        let temp = this.values[parent];
-        this.values[parent] = this.values[child];
-        this.values[child] = temp;
+      if (
+        this.values[parent].diff > this.values[child].diff ||
+        (this.values[parent].diff === this.values[child].diff &&
+          this.values[parent].el < this.values[child].el)
+      ) {
+        [this.values[parent], this.values[child]] = [this.values[child], this.values[parent]];
         child = parent;
         parent = Math.floor((child - 1) / 2);
       } else {
@@ -148,14 +150,10 @@ class MinHeapObj {
 
   pop() {
     if (this.values.length === 0) return null;
-
     if (this.values.length === 1) return this.values.pop();
 
-    let temp = this.values[this.values.length - 1];
-    this.values[this.values.length - 1] = this.values[0];
-    this.values[0] = temp;
-
-    const val = this.values.pop();
+    const val = this.values[0];
+    this.values[0] = this.values.pop();
 
     let parent = 0;
     let left_child = 1;
@@ -164,14 +162,21 @@ class MinHeapObj {
     while (left_child < this.values.length) {
       let smaller_child =
         right_child < this.values.length &&
-        this.values[right_child].diff < this.values[left_child].diff
+        (this.values[right_child].diff < this.values[left_child].diff ||
+          (this.values[right_child].diff === this.values[left_child].diff &&
+            this.values[right_child].el > this.values[left_child].el))
           ? right_child
           : left_child;
 
-      if (this.values[parent].diff > this.values[smaller_child].diff) {
-        let temp = this.values[parent];
-        this.values[parent] = this.values[smaller_child];
-        this.values[smaller_child] = temp;
+      if (
+        this.values[parent].diff > this.values[smaller_child].diff ||
+        (this.values[parent].diff === this.values[smaller_child].diff &&
+          this.values[parent].el < this.values[smaller_child].el)
+      ) {
+        [this.values[parent], this.values[smaller_child]] = [
+          this.values[smaller_child],
+          this.values[parent],
+        ];
         parent = smaller_child;
       } else {
         break;
@@ -184,6 +189,7 @@ class MinHeapObj {
     return val;
   }
 }
+
 // const h = new MaxHeap();
 // h.push(5);
 // h.push(4);

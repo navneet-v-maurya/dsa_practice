@@ -57,7 +57,6 @@ const sort_k_sorted_arr = (arr, k) => {
 console.log(sort_k_sorted_arr([6, 5, 3, 2, 8, 10, 9], 3));
 
 //k closest numbers to an el
-
 const find_closest_k_elements = (arr, k, x) => {
   let min_heap = new MinHeapObj();
 
@@ -66,13 +65,13 @@ const find_closest_k_elements = (arr, k, x) => {
     min_heap.push({ diff: Math.abs(arr[i] - x), el: arr[i] });
   }
 
-  let temp;
   const result = [];
-  for (let i = 0; i < k; i++) {
-    temp = min_heap.pop();
-    result.push(temp.el);
+  while (k-- > 0 && min_heap.values.length > 0) {
+    result.push(min_heap.pop().el);
   }
   return result;
 };
 
-console.log(find_closest_k_elements([12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56], 4, 35));
+console.log(
+  find_closest_k_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19], 3, 17)
+);
