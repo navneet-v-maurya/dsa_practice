@@ -147,5 +147,91 @@ const frequency_sort = (nums) => {
 console.log("frequency_sort => ", frequency_sort([2, 3, 1, 3, 2]));
 
 //k closest point to origin
+
+const k_closest_to_origin = (points, k) => {
+  let max_heap = new MaxHeapObj();
+
+  for (let i = 0; i < points.length; i++) {
+    max_heap.push({
+      diff: points[i][0] * points[i][0] + points[i][1] * points[i][1],
+      el: points[i],
+    });
+
+    if (max_heap.values.length > k) {
+      max_heap.pop();
+    }
+  }
+
+  const result = [];
+  let temp;
+  while (max_heap.values.length > 0) {
+    temp = max_heap.pop();
+    result.push(temp.el);
+  }
+
+  return result;
+};
+
+console.log(
+  "k_closest_to_origin => ",
+  k_closest_to_origin(
+    [
+      [3, 3],
+      [5, -1],
+      [-2, 4],
+    ],
+    2
+  )
+);
+
 //connect ropes to minimise the cost
+const connect_ropes_to_minimise_cost = (arr) => {
+  const min_heap = new MinHeap();
+
+  for (let i = 0; i < arr.length; i++) {
+    min_heap.push(arr[i]);
+  }
+
+  let count = 0;
+  let result = 0;
+  let temp1, temp2;
+  while (min_heap.values.length > 1) {
+    temp1 = min_heap.pop();
+    temp2 = min_heap.pop();
+
+    count = temp1 + temp2;
+    result += count;
+    min_heap.push(count);
+  }
+
+  return result;
+};
+
+console.log("connect_ropes_to_minimise_cost => ", connect_ropes_to_minimise_cost([4, 3, 2, 6]));
+
 //sum of el between k1 smallest and k2 smallest numbers
+const sum_between_two_smallest_k = (A, K1, K2) => {
+  const max_heap = new MaxHeap();
+
+  for (let i = 0; i < A.length; i++) {
+    max_heap.push(A[i]);
+
+    if (max_heap.values.length >= K2) {
+      max_heap.pop();
+    }
+  }
+
+  let counter = 0;
+
+  for (let i = K2; i > K1 + 1; i--) {
+    let temp = max_heap.pop();
+    counter += temp;
+  }
+
+  return counter;
+};
+
+console.log(
+  "sum_between_two_smallest_k => ",
+  sum_between_two_smallest_k([10, 2, 50, 12, 48, 13], 2, 6)
+);
