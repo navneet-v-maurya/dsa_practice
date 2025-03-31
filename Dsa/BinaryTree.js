@@ -57,4 +57,4 @@ class BinaryTree {
 
 // console.log(t.push(4));
 
-module.exports = BinaryTree;
+module.exports = { BinaryTree };

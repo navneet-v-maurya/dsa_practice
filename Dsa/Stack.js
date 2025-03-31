@@ -110,3 +110,7 @@ const reverse_individual_words = (str) => {
 };
 
 reverse_individual_words("Hellow World");
+
+module.exports = {
+  Stack,
+};
