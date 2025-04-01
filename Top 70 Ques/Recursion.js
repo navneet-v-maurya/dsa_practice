@@ -31,13 +31,49 @@ const factoral = (n) => {
 };
 
 console.log("factoral => ", factoral(5));
+console.log("\n******");
 
 //sort array
-const sort_arr = (arr) => {};
+const sort_arr = (arr) => {
+  const insert = (arr, val) => {
+    if (arr.length === 0 || arr[arr.length - 1] <= val) {
+      arr.push(val);
+      return;
+    }
+
+    const popped_val = arr.pop();
+    insert(arr, val);
+
+    arr.push(popped_val);
+  };
+
+  const sort = (arr) => {
+    if (arr.length === 1) {
+      return;
+    }
+
+    const val = arr.pop();
+    sort(arr);
+    insert(arr, val);
+  };
+
+  sort(arr);
+  return arr;
+};
+
+console.log("sort_arr => ", sort_arr([4, 3, 5, 3, 1]));
+console.log("\n******");
 
 //height of a binary tree
 const height_of_binary_tree = (root) => {
-  console.log(root);
+  if (!root) {
+    return 0;
+  }
+
+  const h1 = 1 + height_of_binary_tree(root.left);
+  const h2 = 1 + height_of_binary_tree(root.right);
+
+  return Math.max(h1, h2);
 };
 
 const binary_tree = new BinaryTree();
@@ -49,9 +85,41 @@ binary_tree.push(34);
 binary_tree.push(1);
 
 console.log("height_of_binary_tree => ", height_of_binary_tree(binary_tree.root));
+console.log("\n******");
 
 //sort a stack
-const sort_stack = (stack) => {};
+const sort_stack = (stack) => {
+  const before_sort = stack.print();
+
+  const insert = (stack, value) => {
+    if (!stack.head || stack?.head?.val <= value) {
+      stack.push(value);
+      return;
+    }
+
+    const temp = stack.pop();
+
+    insert(stack, value);
+
+    stack.push(temp);
+  };
+
+  const sort = (stack) => {
+    if (!stack.head.next) {
+      return;
+    }
+
+    const temp = stack.pop();
+
+    sort(stack);
+
+    insert(stack, temp);
+  };
+
+  sort(stack);
+
+  console.log("sort_stack => ", before_sort, "\t => \t", stack.print());
+};
 
 const stack = new Stack();
 stack.push(5);
@@ -61,4 +129,9 @@ stack.push(2);
 stack.push(67);
 stack.push(1);
 
-console.log(sort_stack(stack));
+sort_stack(stack);
+console.log("\n******");
+
+//delete middle el of a stack
+//reverse a stack using recursion
+//kth symbol in grammer

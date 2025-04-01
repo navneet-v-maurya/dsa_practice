@@ -43,7 +43,7 @@ class Stack {
 
     current = null;
 
-    return temp_val;
+    return temp_val?.val;
   }
 
   print() {
@@ -53,7 +53,7 @@ class Stack {
       str += str.length === 0 ? `${current.val}` : `->${current.val}`;
       current = current.next;
     }
-    console.log((str += str.length != 0 ? "->null" : "null"));
+    return (str += str.length != 0 ? "->null" : "null");
   }
 
   reverse_stack_using_queue() {
@@ -78,16 +78,16 @@ class Stack {
 
 const s = new Stack();
 
-s.reverse_stack_using_queue();
-s.print();
-s.push(3);
-s.reverse_stack_using_queue();
-s.print();
-s.push(2);
-s.push(1);
-s.print();
-s.reverse_stack_using_queue();
-s.print();
+// s.reverse_stack_using_queue();
+// s.print();
+// s.push(3);
+// s.reverse_stack_using_queue();
+// s.print();
+// s.push(2);
+// s.push(1);
+// s.print();
+// s.reverse_stack_using_queue();
+// s.print();
 
 const reverse_individual_words = (str) => {
   const s = new Stack();
