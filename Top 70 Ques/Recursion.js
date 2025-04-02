@@ -31,7 +31,6 @@ const factoral = (n) => {
 };
 
 console.log("factoral => ", factoral(5));
-console.log("\n******");
 
 //sort array
 const sort_arr = (arr) => {
@@ -62,7 +61,6 @@ const sort_arr = (arr) => {
 };
 
 console.log("sort_arr => ", sort_arr([4, 3, 5, 3, 1]));
-console.log("\n******");
 
 //height of a binary tree
 const height_of_binary_tree = (root) => {
@@ -85,7 +83,6 @@ binary_tree.push(34);
 binary_tree.push(1);
 
 console.log("height_of_binary_tree => ", height_of_binary_tree(binary_tree.root));
-console.log("\n******");
 
 //sort a stack
 const sort_stack = (stack) => {
@@ -118,7 +115,7 @@ const sort_stack = (stack) => {
 
   sort(stack);
 
-  console.log("sort_stack => ", before_sort, "\t => \t", stack.print());
+  console.log("sort_stack => ", before_sort, " => ", stack.print());
 };
 
 const stack = new Stack();
@@ -130,8 +127,87 @@ stack.push(67);
 stack.push(1);
 
 sort_stack(stack);
-console.log("\n******");
 
 //delete middle el of a stack
+const delete_middle_el_stack = (stack) => {
+  if (!stack.head) return;
+
+  const before_sort = stack.print();
+
+  let temp = stack.head;
+  let length = 0;
+
+  while (temp) {
+    length++;
+    temp = temp.next;
+  }
+
+  const mid = Math.floor((length + 1) / 2);
+
+  const del = (stack, counter) => {
+    if (counter === mid - 1) {
+      stack.pop();
+      return;
+    }
+    const val = stack.pop();
+    del(stack, counter + 1);
+    stack.push(val);
+  };
+
+  del(stack, 0);
+
+  console.log("delete_middle_el_stack => ", before_sort, " => ", stack.print());
+};
+
+const stack2 = new Stack();
+stack2.push(5);
+stack2.push(12);
+stack2.push(34);
+stack2.push(2);
+stack2.push(67);
+// stack2.push(1);
+
+delete_middle_el_stack(stack2);
+
 //reverse a stack using recursion
+const reverse_stack = (stack) => {
+  const before_sort = stack.print();
+
+  const reverse = (stack) => {
+    if (!stack.head) {
+      return;
+    }
+
+    const val = stack.pop();
+    reverse(stack);
+    insert(stack, val);
+  };
+
+  const insert = (stack, val) => {
+    if (!stack.head) {
+      stack.push(val);
+      return;
+    }
+
+    const temp = stack.pop();
+    insert(stack, val);
+
+    stack.push(temp);
+  };
+
+  reverse(stack);
+
+  console.log("reverse_stack => ", before_sort, " => ", stack.print());
+};
+
+const stack3 = new Stack();
+stack3.push(5);
+stack3.push(12);
+stack3.push(34);
+stack3.push(2);
+stack3.push(67);
+stack3.push(1);
+
+reverse_stack(stack3);
+
 //kth symbol in grammer
