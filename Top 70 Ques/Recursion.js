@@ -211,3 +211,16 @@ stack3.push(1);
 reverse_stack(stack3);
 
 //kth symbol in grammer
+const kth_symbol = (n, k) => {
+  if (n === 1 && k === 1) return 0;
+
+  const mid = Math.pow(2, n - 2);
+
+  if (k > mid) {
+    return 1 - kth_symbol(n - 1, k - mid);
+  } else {
+    return kth_symbol(n - 1, k);
+  }
+};
+
+console.log("kth_symbol => ", kth_symbol(3, 3));
