@@ -3,9 +3,9 @@ const { BinaryTree } = require("../Dsa/BinaryTree");
 
 //print 1 to n
 const print_1_to_n = (n) => {
-    if (n < 1) return;
-    print_1_to_n(n - 1);
-    console.log("print_1_to_n => ", n);
+  if (n < 1) return;
+  print_1_to_n(n - 1);
+  console.log("print_1_to_n => ", n);
 };
 
 print_1_to_n(5);
@@ -13,10 +13,10 @@ console.log("\n******");
 
 // print n to 1
 const print_n_to_1 = (n) => {
-    if (n < 1) return;
+  if (n < 1) return;
 
-    console.log("print_n_to_1 => ", n);
-    print_n_to_1(n - 1);
+  console.log("print_n_to_1 => ", n);
+  print_n_to_1(n - 1);
 };
 
 print_n_to_1(5);
@@ -25,53 +25,53 @@ console.log("\n******");
 // facrorial of a number
 
 const factoral = (n) => {
-    if (n <= 1) return 1;
+  if (n <= 1) return 1;
 
-    return factoral(n - 1) * n;
+  return factoral(n - 1) * n;
 };
 
 console.log("factoral => ", factoral(5));
 
 //sort array
 const sort_arr = (arr) => {
-    const insert = (arr, val) => {
-        if (arr.length === 0 || arr[arr.length - 1] <= val) {
-            arr.push(val);
-            return;
-        }
+  const insert = (arr, val) => {
+    if (arr.length === 0 || arr[arr.length - 1] <= val) {
+      arr.push(val);
+      return;
+    }
 
-        const popped_val = arr.pop();
-        insert(arr, val);
+    const popped_val = arr.pop();
+    insert(arr, val);
 
-        arr.push(popped_val);
-    };
+    arr.push(popped_val);
+  };
 
-    const sort = (arr) => {
-        if (arr.length === 1) {
-            return;
-        }
+  const sort = (arr) => {
+    if (arr.length === 1) {
+      return;
+    }
 
-        const val = arr.pop();
-        sort(arr);
-        insert(arr, val);
-    };
-
+    const val = arr.pop();
     sort(arr);
-    return arr;
+    insert(arr, val);
+  };
+
+  sort(arr);
+  return arr;
 };
 
 console.log("sort_arr => ", sort_arr([4, 3, 5, 3, 1]));
 
 //height of a binary tree
 const height_of_binary_tree = (root) => {
-    if (!root) {
-        return 0;
-    }
+  if (!root) {
+    return 0;
+  }
 
-    const h1 = 1 + height_of_binary_tree(root.left);
-    const h2 = 1 + height_of_binary_tree(root.right);
+  const h1 = 1 + height_of_binary_tree(root.left);
+  const h2 = 1 + height_of_binary_tree(root.right);
 
-    return Math.max(h1, h2);
+  return Math.max(h1, h2);
 };
 
 const binary_tree = new BinaryTree();
@@ -86,36 +86,36 @@ console.log("height_of_binary_tree => ", height_of_binary_tree(binary_tree.root)
 
 //sort a stack
 const sort_stack = (stack) => {
-    const before_sort = stack.print();
+  const before_sort = stack.print();
 
-    const insert = (stack, value) => {
-        if (!stack.head || stack?.head?.val <= value) {
-            stack.push(value);
-            return;
-        }
+  const insert = (stack, value) => {
+    if (!stack.head || stack?.head?.val <= value) {
+      stack.push(value);
+      return;
+    }
 
-        const temp = stack.pop();
+    const temp = stack.pop();
 
-        insert(stack, value);
+    insert(stack, value);
 
-        stack.push(temp);
-    };
+    stack.push(temp);
+  };
 
-    const sort = (stack) => {
-        if (!stack.head.next) {
-            return;
-        }
+  const sort = (stack) => {
+    if (!stack.head.next) {
+      return;
+    }
 
-        const temp = stack.pop();
-
-        sort(stack);
-
-        insert(stack, temp);
-    };
+    const temp = stack.pop();
 
     sort(stack);
 
-    console.log("sort_stack => ", before_sort, " => ", stack.print());
+    insert(stack, temp);
+  };
+
+  sort(stack);
+
+  console.log("sort_stack => ", before_sort, " => ", stack.print());
 };
 
 const stack = new Stack();
@@ -130,33 +130,33 @@ sort_stack(stack);
 
 //delete middle el of a stack
 const delete_middle_el_stack = (stack) => {
-    if (!stack.head) return;
+  if (!stack.head) return;
 
-    const before_sort = stack.print();
+  const before_sort = stack.print();
 
-    let temp = stack.head;
-    let length = 0;
+  let temp = stack.head;
+  let length = 0;
 
-    while (temp) {
-        length++;
-        temp = temp.next;
+  while (temp) {
+    length++;
+    temp = temp.next;
+  }
+
+  const mid = Math.floor((length + 1) / 2);
+
+  const del = (stack, counter) => {
+    if (counter === mid - 1) {
+      stack.pop();
+      return;
     }
+    const val = stack.pop();
+    del(stack, counter + 1);
+    stack.push(val);
+  };
 
-    const mid = Math.floor((length + 1) / 2);
+  del(stack, 0);
 
-    const del = (stack, counter) => {
-        if (counter === mid - 1) {
-            stack.pop();
-            return;
-        }
-        const val = stack.pop();
-        del(stack, counter + 1);
-        stack.push(val);
-    };
-
-    del(stack, 0);
-
-    console.log("delete_middle_el_stack => ", before_sort, " => ", stack.print());
+  console.log("delete_middle_el_stack => ", before_sort, " => ", stack.print());
 };
 
 const stack2 = new Stack();
@@ -171,33 +171,33 @@ delete_middle_el_stack(stack2);
 
 //reverse a stack using recursion
 const reverse_stack = (stack) => {
-    const before_sort = stack.print();
+  const before_sort = stack.print();
 
-    const reverse = (stack) => {
-        if (!stack.head) {
-            return;
-        }
+  const reverse = (stack) => {
+    if (!stack.head) {
+      return;
+    }
 
-        const val = stack.pop();
-        reverse(stack);
-        insert(stack, val);
-    };
-
-    const insert = (stack, val) => {
-        if (!stack.head) {
-            stack.push(val);
-            return;
-        }
-
-        const temp = stack.pop();
-        insert(stack, val);
-
-        stack.push(temp);
-    };
-
+    const val = stack.pop();
     reverse(stack);
+    insert(stack, val);
+  };
 
-    console.log("reverse_stack => ", before_sort, " => ", stack.print());
+  const insert = (stack, val) => {
+    if (!stack.head) {
+      stack.push(val);
+      return;
+    }
+
+    const temp = stack.pop();
+    insert(stack, val);
+
+    stack.push(temp);
+  };
+
+  reverse(stack);
+
+  console.log("reverse_stack => ", before_sort, " => ", stack.print());
 };
 
 const stack3 = new Stack();
@@ -212,20 +212,94 @@ reverse_stack(stack3);
 
 //kth symbol in grammer
 const kth_symbol = (n, k) => {
-    if (n === 1 && k === 1) return 0;
+  if (n === 1 && k === 1) return 0;
 
-    const mid = Math.pow(2, n - 2);
+  const mid = Math.pow(2, n - 2);
 
-    if (k > mid) {
-        return 1 - kth_symbol(n - 1, k - mid);
-    } else {
-        return kth_symbol(n - 1, k);
-    }
+  if (k > mid) {
+    return 1 - kth_symbol(n - 1, k - mid);
+  } else {
+    return kth_symbol(n - 1, k);
+  }
 };
 
 console.log("kth_symbol => ", kth_symbol(3, 3));
 
-//tower of  hanoi
 //print subsets
-//unique sustrings and variations
+const subset_of_str = (str) => {
+  const arr = [];
+
+  const print_subsets = (input, output = "") => {
+    if (input.length === 0) {
+      arr.push(output);
+      return;
+    }
+
+    print_subsets(input.substring(1), output);
+    print_subsets(input.substring(1), output + input[0]);
+  };
+
+  print_subsets(str);
+
+  return arr;
+};
+
+console.log("subset_of_str => ", subset_of_str("aabc"));
+
+//unique subsets
+const unique_subset_of_str = (str) => {
+  const map = new Map();
+
+  const print_subsets = (input, output = "") => {
+    if (input.length === 0) {
+      map.set(output, output);
+      return;
+    }
+
+    print_subsets(input.substring(1), output);
+    print_subsets(input.substring(1), output + input[0]);
+  };
+
+  print_subsets(str);
+
+  const arr = [];
+
+  map.forEach((el) => {
+    arr.push(el);
+  });
+
+  return arr;
+};
+
+console.log("unique_subset_of_str => ", unique_subset_of_str("aabc"));
+
+//subsets of array
+const subset_of_arr = (arr) => {
+  const map = new Map();
+
+  const print_subsets = (input, output, counter) => {
+    if (counter === arr.length) {
+      map.set(output.toString(), output);
+      return;
+    }
+    const temp = input[counter];
+
+    print_subsets(input, output, counter + 1);
+    print_subsets(input, [...output, temp], counter + 1);
+  };
+
+  print_subsets(arr, [], 0);
+
+  const result = [];
+
+  map.forEach((el) => {
+    result.push(el);
+  });
+
+  return result;
+};
+
+console.log("subset_of_arr => ", subset_of_arr([1, 2, 3]));
+
 //permutaion with spaces
+//tower of  hanoi
