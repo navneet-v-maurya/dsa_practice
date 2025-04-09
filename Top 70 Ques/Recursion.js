@@ -302,4 +302,74 @@ const subset_of_arr = (arr) => {
 console.log("subset_of_arr => ", subset_of_arr([1, 2, 3]));
 
 //permutaion with spaces
+
+const permutaion_with_spaces = (str) => {
+  const arr = [];
+  let output = str[0];
+  let input = str.substring(1);
+
+  const add_spaces = (input, output = "") => {
+    if (input.length === 0) {
+      arr.push(output);
+      return;
+    }
+
+    add_spaces(input.substring(1), output + input[0]);
+    add_spaces(input.substring(1), output + "_" + input[0]);
+  };
+
+  add_spaces(input, output);
+  return arr;
+};
+
+console.log("permutaion_with_spaces => ", permutaion_with_spaces("abcd"));
+
+//permutation with case change   abc
+const permutation_with_case_change = (str) => {
+  const arr = [];
+
+  const case_change = (input, output = "") => {
+    if (input.length === 0) {
+      arr.push(output);
+      return;
+    }
+
+    case_change(input.substring(1), output + input[0]);
+    case_change(input.substring(1), output + input[0].toUpperCase());
+  };
+
+  case_change(str);
+
+  return arr;
+};
+
+console.log("permutation_with_case_change => ", permutation_with_case_change("abc"));
+
+//letter case permutaion  a1B2
+
+const letter_case_permutation = (str) => {
+  const arr = [];
+
+  const letter_case = (input, output = "") => {
+    if (input.length === 0) {
+      arr.push(output);
+      return;
+    }
+
+    if (!isNaN(input[0])) {
+      letter_case(input.substring(1), output + input[0]);
+    } else {
+      letter_case(input.substring(1), output + input[0].toLowerCase());
+      letter_case(input.substring(1), output + input[0].toUpperCase());
+    }
+  };
+
+  letter_case(str);
+
+  return arr;
+};
+
+console.log("letter_case_permutation => ", letter_case_permutation("a1B2"));
+
+//generate all balanced parenthesis
 //tower of  hanoi
