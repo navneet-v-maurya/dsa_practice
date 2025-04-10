@@ -372,4 +372,6 @@ const letter_case_permutation = (str) => {
 console.log("letter_case_permutation => ", letter_case_permutation("a1B2"));
 
 //generate all balanced parenthesis
+//print N birt binary numbers 1s >= 0s
+//josephus problem
 //tower of  hanoi
