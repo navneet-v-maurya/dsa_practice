@@ -372,6 +372,87 @@ const letter_case_permutation = (str) => {
 console.log("letter_case_permutation => ", letter_case_permutation("a1B2"));
 
 //generate all balanced parenthesis
+
+const get_all_balanced_paranthesis = (n) => {
+  let arr = [];
+
+  const get_result = (output, start, end) => {
+    if (start === 0 && end === 0) {
+      arr.push(output);
+      return;
+    }
+
+    if (start < end) {
+      if (start > 0) {
+        get_result(output + "(", start - 1, end);
+      }
+
+      if (end > 0) {
+        get_result(output + ")", start, end - 1);
+      }
+    } else {
+      get_result(output + "(", start - 1, end);
+    }
+  };
+
+  get_result("", n, n);
+
+  return arr;
+};
+
+console.log("get_all_balanced_paranthesis => ", get_all_balanced_paranthesis(3));
+
 //print N birt binary numbers 1s >= 0s
+const get_all_binary_numbers = (n) => {
+  const arr = [];
+
+  const get_result = (output, input, ones = 0, zeros = 0) => {
+    if (input === 0) {
+      arr.push(output);
+      return;
+    }
+
+    get_result(output + "1", input - 1, ones + 1, zeros);
+
+    if (ones > zeros) {
+      get_result(output + "0", input - 1, ones, zeros + 1);
+    }
+  };
+
+  get_result("", n * 2);
+
+  return arr;
+};
+
+console.log("get_all_binary_numbers => ", get_all_binary_numbers(3));
+
 //josephus problem
+const josephus_problem = (n, k) => {
+  let remaining;
+
+  const josephus = (n, k, index = 0) => {
+    if (n.length === 1) {
+      remaining = n[0];
+      return;
+    }
+
+    index = (index + k) % n.length;
+    n.splice(index, 1);
+
+    josephus(n, k, index);
+  };
+
+  const arr = new Array(n);
+
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = i + 1;
+  }
+
+  josephus(arr, k - 1);
+
+  return remaining;
+};
+
+console.log("josephus_problem => ", josephus_problem(6, 2));
+
 //tower of  hanoi
