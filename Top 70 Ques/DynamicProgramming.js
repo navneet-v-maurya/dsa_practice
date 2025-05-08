@@ -52,3 +52,69 @@ const knapsack_iterative = (weight, price, w) => {
 };
 
 console.log("knapsack_iterative => ", knapsack_iterative([4, 5, 1], [1, 2, 3], 4));
+
+//subset sum recusive
+
+const subset_sum_recursive = (arr, sum) => {
+  let counter = 0;
+
+  const temp = Array.from({ length: arr.length + 1 }, () => new Array(sum + 1));
+
+  for (let i = 0; i < arr.length + 1; i++) {
+    for (let j = 0; j < sum + 1; j++) {
+      if (j === 0) {
+        temp[i][j] = true;
+      } else if (i === 0) {
+        temp[i][j] = false;
+      }
+    }
+  }
+
+  const found = (arr, sum, counter) => {
+    if (sum === 0) {
+      return true;
+    }
+
+    if (counter >= arr.length || sum < 0) {
+      return false;
+    }
+
+    if (temp[counter][sum]) {
+      return temp[counter][sum];
+    }
+
+    const include = found(arr, sum - arr[counter], counter + 1);
+    const exclude = found(arr, sum, counter + 1);
+
+    return (temp[counter][sum] = include || exclude);
+  };
+
+  const result = found(arr, sum, counter);
+
+  return result;
+};
+
+console.log("subset_sum_recursive => ", subset_sum_recursive([1, 4, 3], 3));
+
+//subset sum iterative
+const subset_sum_iterative = (arr, sum) => {
+  const temp = Array.from({ length: arr.length + 1 }, () => new Array(sum + 1));
+
+  for (let i = 0; i < arr.length + 1; i++) {
+    for (let j = 0; j < sum + 1; j++) {
+      if (j === 0) {
+        temp[i][j] = true;
+      } else if (i === 0) {
+        temp[i][j] = false;
+      } else if (arr[i - 1] <= j) {
+        temp[i][j] = temp[i - 1][j - arr[i - 1]] || temp[i - 1][j];
+      } else {
+        temp[i][j] = temp[i - 1][j];
+      }
+    }
+  }
+
+  return temp[arr.length][sum];
+};
+
+console.log("subset_sum_iterative => ", subset_sum_iterative([1, 4, 3], 3));
