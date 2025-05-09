@@ -118,3 +118,18 @@ const subset_sum_iterative = (arr, sum) => {
 };
 
 console.log("subset_sum_iterative => ", subset_sum_iterative([1, 4, 3], 3));
+
+//Partition Equal Subset Sum
+const equal_subset_partition = (arr) => {
+  let sum = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+
+  if (sum % 2 !== 0) return false;
+
+  return subset_sum_recursive(arr, sum / 2);
+};
+
+console.log(equal_subset_partition([1, 5, 11, 5]));
