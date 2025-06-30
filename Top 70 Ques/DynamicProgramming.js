@@ -132,4 +132,49 @@ const equal_subset_partition = (arr) => {
   return subset_sum_recursive(arr, sum / 2);
 };
 
-console.log(equal_subset_partition([1, 5, 11, 5]));
+console.log("equal_subset_partition => ", equal_subset_partition([1, 5, 11, 5]));
+
+//subset sum count
+const subset_sum_count_recursive = (arr, sum) => {
+  let counter = 0;
+
+  let res = [];
+
+  const temp = Array.from({ length: arr.length + 1 }, () => new Array(sum + 1));
+
+  for (let i = 0; i < arr.length + 1; i++) {
+    for (let j = 0; j < sum + 1; j++) {
+      if (j === 0) {
+        temp[i][j] = true;
+      } else if (i === 0) {
+        temp[i][j] = false;
+      }
+    }
+  }
+
+  const found = (arr, sum, counter) => {
+    if (sum === 0) {
+      res.push(1);
+      return true;
+    }
+
+    if (counter >= arr.length || sum < 0) {
+      return false;
+    }
+
+    if (temp[counter][sum]) {
+      return temp[counter][sum];
+    }
+
+    const include = found(arr, sum - arr[counter], counter + 1, res);
+    const exclude = found(arr, sum, counter + 1, res);
+
+    return (temp[counter][sum] = include || exclude);
+  };
+
+  found(arr, sum, counter, res);
+
+  return res.length;
+};
+
+console.log("subset_sum_recursive => ", subset_sum_count_recursive([2, 3, 5, 6, 8, 10], 10));
