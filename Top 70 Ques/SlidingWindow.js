@@ -58,4 +58,43 @@ const first_neg_num = (arr, k) => {
 console.log("first_neg_num => ", first_neg_num([-8, 2, 3, -6, 10], 2));
 
 //Count Occurrences Of Anagrams
+const count_of_occurence_of_anagram = (pat, txt) => {
+    let i = 0;
+    let j = 0;
+    let res = 0;
+
+    let map = new Map();
+    let count = 0;
+
+    for (let i = 0; i < txt.length; i++) {
+        if (map.has(txt[i])) {
+            map.set(txt[i], map.get(txt[i]) + 1);
+        } else {
+            map.set(txt[i], 1);
+            count++;
+        }
+    }
+
+    while (j < pat.length) {
+        if (map.has(pat[j])) {
+            map.set(pat[j], map.get(pat[j]) - 1);
+            if (map.get(pat[j]) === 0) count--;
+        }
+
+        if (j - i + 1 === txt.length) {
+            if (count === 0) res++;
+
+            if (map.has(pat[i])) {
+                if (map.get(pat[i]) === 0) count++;
+                map.set(pat[i], map.get(pat[i]) + 1);
+            }
+            i++;
+        }
+        j++;
+    }
+
+    return res;
+};
+
+console.log("count_of_occurence_of_anagram => ", count_of_occurence_of_anagram("aabaabaa", "aaba"));
 //maximum of all subarrays of size k
