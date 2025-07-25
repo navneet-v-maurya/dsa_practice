@@ -14,6 +14,7 @@ class Stack {
   constructor() {
     this.head = null;
     this.tail = null;
+    this.length = 0;
   }
 
   push(val) {
@@ -25,6 +26,7 @@ class Stack {
       new_node.next = this.head;
       this.head = new_node;
     }
+    this.length++;
     return this;
   }
 
@@ -42,8 +44,13 @@ class Stack {
     }
 
     current = null;
+    this.length--;
 
     return temp_val?.val;
+  }
+
+  get_length() {
+    return this.length;
   }
 
   print() {
