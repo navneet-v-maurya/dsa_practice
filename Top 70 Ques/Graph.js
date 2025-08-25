@@ -49,6 +49,7 @@ const path_exist = (edges, source, destination) => {
 };
 
 console.log(
+  "path_exist => ",
   path_exist(
     [
       [0, 1],
@@ -61,3 +62,56 @@ console.log(
     5
   )
 );
+
+//steps by knight problem
+
+const knights_problem = (n, start, destination) => {
+  const visited = {};
+  const queue = [];
+  let moves = 0;
+
+  const total_moves = [
+    [2, -1],
+    [2, 1],
+    [1, 2],
+    [-1, 2],
+    [-2, 1],
+    [-2, -1],
+    [-1, -2],
+    [1, -2],
+  ];
+
+  queue.push(start);
+  visited[`${start[0]},${start[1]}`] = true;
+
+  while (queue.length > 0) {
+    const size = queue.length;
+
+    for (let i = 0; i < size; i++) {
+      const temp = queue.shift();
+
+      if (temp[0] === destination[0] && temp[1] === destination[1]) {
+        return moves;
+      }
+
+      for (let j = 0; j < total_moves.length; j++) {
+        const new_x = temp[0] + total_moves[j][0];
+        const new_y = temp[1] + total_moves[j][1];
+
+        if (new_x >= 0 && new_x < n && new_y >= 0 && new_y < n) {
+          const key = `${new_x},${new_y}`;
+          if (!visited[key]) {
+            queue.push([new_x, new_y]);
+            visited[key] = true;
+          }
+        }
+      }
+    }
+
+    moves++;
+  }
+
+  return -1;
+};
+
+console.log("knights_problem => ", knights_problem(8, [0, 0], [7, 7]));
