@@ -115,3 +115,62 @@ const knights_problem = (n, start, destination) => {
 };
 
 console.log("knights_problem => ", knights_problem(8, [0, 0], [7, 7]));
+
+//reorder routes
+
+const reorder_routes = (n, connections) => {
+  const forward = {};
+  const reverse = {};
+  const visited = {};
+  let count = 0;
+
+  for (let i = 0; i < connections.length; i++) {
+    const start = connections[i][0];
+    const end = connections[i][1];
+    if (forward[start]) {
+      forward[start].push(end);
+    } else {
+      forward[start] = [end];
+    }
+
+    if (reverse[end]) {
+      reverse[end].push(start);
+    } else {
+      reverse[end] = [start];
+    }
+  }
+
+  const dfs = (key) => {
+    visited[key] = true;
+
+    const forward_neighbours = forward[key] || [];
+    const reversed_neighbors = reverse[key] || [];
+
+    for (let i = 0; i < forward_neighbours.length; i++) {
+      if (!visited[forward_neighbours[i]]) {
+        count += 1;
+        dfs(forward_neighbours[i]);
+      }
+    }
+
+    for (let i = 0; i < reversed_neighbors.length; i++) {
+      if (!visited[reversed_neighbors[i]]) {
+        dfs(reversed_neighbors[i]);
+      }
+    }
+  };
+
+  dfs(0);
+
+  return count;
+};
+
+console.log(
+  reorder_routes(6, [
+    [0, 1],
+    [1, 3],
+    [2, 3],
+    [4, 0],
+    [4, 5],
+  ])
+);
