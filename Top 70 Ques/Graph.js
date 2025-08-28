@@ -178,43 +178,34 @@ console.log(
 //cycle detection using dfs
 
 const has_cycle_using_dfs = (edges) => {
-  const graph = new Array(edges.length);
+  const graph = [];
 
-  for (let i = 0; i < edges.length; i++) {
-    const first = edges[i][0];
-    const second = edges[i][1];
-
-    if (graph[first]) {
-      graph[first].push(second);
-    } else {
-      graph[first] = [second];
-    }
-
-    if (graph[second]) {
-      graph[second].push(first);
-    } else {
-      graph[second] = [first];
-    }
+  for (let [u, v] of edges) {
+    if (!graph[u]) graph[u] = [];
+    if (!graph[v]) graph[v] = [];
+    graph[u].push(v);
+    graph[v].push(u);
   }
 
   const visited = {};
 
-  const dfs = (parent, key) => {
-    visited[key] = true;
-    const neighbours = graph[key];
+  const dfs = (node, parent) => {
+    visited[node] = true;
 
-    for (let i = 0; i < neighbours.length; i++) {
-      if (!visited[neighbours[i]]) {
-        if (dfs(parent, neighbours[i])) return true;
-      } else if (parent !== neighbours[i]) {
+    for (let nei of graph[node]) {
+      if (!visited[nei]) {
+        if (dfs(nei, node)) return true;
+      } else if (nei !== parent) {
         return true;
       }
     }
+
+    return false;
   };
 
   for (let i = 0; i < graph.length; i++) {
-    if (!visited[i]) {
-      if (dfs(i, i)) return true;
+    if (graph[i] && !visited[i]) {
+      if (dfs(i, -1)) return true;
     }
   }
 
