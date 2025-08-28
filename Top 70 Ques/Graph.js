@@ -176,4 +176,59 @@ console.log(
 );
 
 //cycle detection using dfs
+
+const has_cycle_using_dfs = (edges) => {
+  const graph = new Array(edges.length);
+
+  for (let i = 0; i < edges.length; i++) {
+    const first = edges[i][0];
+    const second = edges[i][1];
+
+    if (graph[first]) {
+      graph[first].push(second);
+    } else {
+      graph[first] = [second];
+    }
+
+    if (graph[second]) {
+      graph[second].push(first);
+    } else {
+      graph[second] = [first];
+    }
+  }
+
+  const visited = {};
+
+  const dfs = (parent, key) => {
+    visited[key] = true;
+    const neighbours = graph[key];
+
+    for (let i = 0; i < neighbours.length; i++) {
+      if (!visited[neighbours[i]]) {
+        if (dfs(parent, neighbours[i])) return true;
+      } else if (parent !== neighbours[i]) {
+        return true;
+      }
+    }
+  };
+
+  for (let i = 0; i < graph.length; i++) {
+    if (!visited[i]) {
+      if (dfs(i, i)) return true;
+    }
+  }
+
+  return false;
+};
+
+console.log(
+  "has_cycle_using_dfs => ",
+  has_cycle_using_dfs([
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [2, 3],
+  ])
+);
+
 //cycle detection using bfs
