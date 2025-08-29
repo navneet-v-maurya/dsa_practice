@@ -166,6 +166,7 @@ const reorder_routes = (n, connections) => {
 };
 
 console.log(
+  "reorder_routes => ",
   reorder_routes(6, [
     [0, 1],
     [1, 3],
@@ -175,9 +176,8 @@ console.log(
   ])
 );
 
-//cycle detection using dfs
-
-const has_cycle_using_dfs = (edges) => {
+//cycle detection using dfs in undirected graph
+const has_cycle_using_dfs_undirected = (edges) => {
   const graph = [];
 
   for (let [u, v] of edges) {
@@ -213,8 +213,8 @@ const has_cycle_using_dfs = (edges) => {
 };
 
 console.log(
-  "has_cycle_using_dfs => ",
-  has_cycle_using_dfs([
+  "has_cycle_using_dfs_undirected => ",
+  has_cycle_using_dfs_undirected([
     [0, 1],
     [0, 2],
     [1, 2],
@@ -222,4 +222,53 @@ console.log(
   ])
 );
 
-//cycle detection using bfs
+//cycle detection using bfs in undirected graph
+const has_cycle_using_bfs_undirected = (edges) => {
+  const graph = new Array(edges.length);
+
+  for (let i = 0; i < edges.length; i++) {
+    const first = edges[i][0];
+    const second = edges[i][1];
+
+    if (!graph[first]) graph[first] = [];
+    if (!graph[second]) graph[second] = [];
+    graph[first].push(second);
+    graph[second].push(first);
+  }
+
+  const queue = [];
+  const visited = {};
+
+  for (let i = 0; i < graph.length; i++) {
+    if (!visited[i]) {
+      queue.push([i, -1]);
+      visited[i] = true;
+      while (queue.length > 0) {
+        const [current, parent] = queue.shift();
+        const neighbours = graph[current] || [];
+        for (let j = 0; j < neighbours.length; j++) {
+          if (!visited[neighbours[j]]) {
+            visited[neighbours[j]] = true;
+            queue.push([neighbours[j], current]);
+          } else if (parent !== neighbours[j]) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+console.log(
+  "has_cycle_using_bfs_undirected => ",
+  has_cycle_using_bfs_undirected([
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [2, 3],
+  ])
+);
+
+//cycle detection using dfs in directed graph
