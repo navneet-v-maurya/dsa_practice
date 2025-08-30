@@ -272,3 +272,53 @@ console.log(
 );
 
 //cycle detection using dfs in directed graph
+
+const has_cycle_using_dfs_direted = (edges) => {
+  const graph = new Array(edges.length);
+
+  for (let i = 0; i < edges.length; i++) {
+    const first = edges[i][0];
+    const second = edges[i][1];
+
+    if (!graph[first]) graph[first] = [];
+    graph[first].push(second);
+  }
+  const visited = {};
+
+  const dfs = (key, current_path) => {
+    visited[key] = true;
+    const neighbours = graph[key] || [];
+
+    for (let i = 0; i < neighbours.length; i++) {
+      if (!visited[neighbours[i]]) {
+        current_path[neighbours[i]] = true;
+        if (dfs(neighbours[i], current_path)) {
+          return true;
+        }
+      } else if (current_path[neighbours[i]]) {
+        return true;
+      }
+    }
+    current_path[key] = false;
+  };
+
+  for (let i = 0; i < graph.length; i++) {
+    if (!visited[i]) {
+      if (dfs(i, { [i]: true })) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+console.log(
+  has_cycle_using_dfs_direted([
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [2, 3],
+  ])
+);
+//eventual safe states
