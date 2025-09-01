@@ -314,6 +314,7 @@ const has_cycle_using_dfs_direted = (edges) => {
 };
 
 console.log(
+  "has_cycle_using_dfs_direted => ",
   has_cycle_using_dfs_direted([
     [0, 1],
     [0, 2],
@@ -321,4 +322,77 @@ console.log(
     [2, 3],
   ])
 );
+
+//longest cycle
+const longest_cycle_directed = (edges) => {
+  const visited = {};
+  let max = 0;
+
+  const dfs = (key, path, length) => {
+    length += 1;
+    visited[key] = true;
+    path[key] = [key, length];
+    const neighbour = edges[key];
+    if (neighbour >= 0) {
+      if (!visited[neighbour]) {
+        dfs(neighbour, path, length);
+      } else if (visited[neighbour] && path[neighbour]) {
+        const temp = path[neighbour];
+
+        if (length - temp[1] + 1 > max) {
+          max = length - temp[1] + 1;
+        }
+      }
+      delete path[key];
+      length -= 1;
+    }
+  };
+  for (let i = 0; i < edges.length; i++) {
+    if (!visited[i] && edges[i] >= 0) {
+      dfs(i, {}, 0);
+    }
+  }
+
+  return max || -1;
+};
+
+console.log("longest_cycle_directed => ", longest_cycle_directed([3, 3, 4, 2, 3]));
+
 //eventual safe states
+
+// const eventual_safe_nodes = (edges) => {
+//   const visited = {};
+//   const result = [];
+
+//   const dfs = (key, path, length) => {
+//     length += 1;
+//     visited[key] = true;
+//     path[key] = length;
+//     const neighbour = edges[key];
+//     //console.log(key);
+
+//     for (let i = 0; i < neighbour.length; i++) {
+//       if (!visited[neighbour[i]]) {
+//         dfs(neighbour[i], path, length);
+//       } else if (visited[neighbour[i]] && path[neighbour[i]] && key !== neighbour[i]) {
+//         const temp = path[neighbour[i]];
+//         console.log(temp, length, path);
+//         // for (let j = length - temp; j <= length; i++) {
+//         //   result.push(j);
+//         // }
+//       }
+//     }
+
+//     path[key] = undefined;
+//     length -= 1;
+//   };
+//   for (let i = 0; i < edges.length; i++) {
+//     if (!visited[i]) {
+//       dfs(i, new Array(edges.length), 0);
+//     }
+//   }
+
+//   return result;
+// };
+
+// console.log(eventual_safe_nodes([[1, 2], [2, 3], [5], [0], [5], [], []]));
