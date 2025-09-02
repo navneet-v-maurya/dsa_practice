@@ -359,40 +359,72 @@ const longest_cycle_directed = (edges) => {
 console.log("longest_cycle_directed => ", longest_cycle_directed([3, 3, 4, 2, 3]));
 
 //eventual safe states
+const eventual_safe_nodes = (graph) => {
+  const n = graph.length;
+  const state = Array(n).fill(0);
+  const dfs = (v) => {
+    if (state[v] !== 0) return state[v] === 2;
+    state[v] = 1;
+    for (const nei of graph[v]) {
+      if (!dfs(nei)) return false;
+    }
+    state[v] = 2;
+    return true;
+  };
+  const res = [];
+  for (let i = 0; i < n; ++i) if (dfs(i)) res.push(i);
+  return res;
+};
 
-// const eventual_safe_nodes = (edges) => {
-//   const visited = {};
-//   const result = [];
+console.log("eventual_safe_nodes => ", eventual_safe_nodes([[0], [2, 3, 4], [3, 4], [0, 4], []]));
 
-//   const dfs = (key, path, length) => {
-//     length += 1;
-//     visited[key] = true;
-//     path[key] = length;
-//     const neighbour = edges[key];
-//     //console.log(key);
+//topological sort using bfs
+const topological_sort_directed_bfs = (v, edges) => {
+  const graph = new Array(v);
+  for (let i = 0; i < edges.length; i++) {
+    const first = edges[i][0];
+    const second = edges[i][1];
 
-//     for (let i = 0; i < neighbour.length; i++) {
-//       if (!visited[neighbour[i]]) {
-//         dfs(neighbour[i], path, length);
-//       } else if (visited[neighbour[i]] && path[neighbour[i]] && key !== neighbour[i]) {
-//         const temp = path[neighbour[i]];
-//         console.log(temp, length, path);
-//         // for (let j = length - temp; j <= length; i++) {
-//         //   result.push(j);
-//         // }
-//       }
-//     }
+    if (!graph[first]) graph[first] = { edges: [], count: 0 };
+    if (!graph[second]) graph[second] = { edges: [], count: 0 };
+    graph[first].edges.push(second);
+    graph[second].count += 1;
+  }
 
-//     path[key] = undefined;
-//     length -= 1;
-//   };
-//   for (let i = 0; i < edges.length; i++) {
-//     if (!visited[i]) {
-//       dfs(i, new Array(edges.length), 0);
-//     }
-//   }
+  const queue = [];
+  const result = [];
 
-//   return result;
-// };
+  for (let i = 0; i < graph.length; i++) {
+    const temp = graph[i];
+    if (!temp || temp.count === 0) {
+      queue.push(i);
+      result.push(i);
+    }
+  }
 
-// console.log(eventual_safe_nodes([[1, 2], [2, 3], [5], [0], [5], [], []]));
+  while (queue.length > 0) {
+    const key = queue.shift();
+
+    const neighbours = graph[key]?.edges || [];
+
+    for (let i = 0; i < neighbours.length; i++) {
+      graph[neighbours[i]].count -= 1;
+
+      if (graph[neighbours[i]].count === 0) {
+        result.push(neighbours[i]);
+        queue.push(neighbours[i]);
+      }
+    }
+  }
+
+  return result;
+};
+
+console.log(
+  "topological_sort_directed_bfs => ",
+  topological_sort_directed_bfs(4, [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+  ])
+);
