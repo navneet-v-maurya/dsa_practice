@@ -360,39 +360,21 @@ console.log("longest_cycle_directed => ", longest_cycle_directed([3, 3, 4, 2, 3]
 
 //eventual safe states
 
-// const eventual_safe_nodes = (edges) => {
-//   const visited = {};
-//   const result = [];
+const eventual_safe_nodes = (graph) => {
+  const n = graph.length;
+  const state = Array(n).fill(0); // 0=unseen,1=visiting,2=safe
+  const dfs = (v) => {
+    if (state[v] !== 0) return state[v] === 2;
+    state[v] = 1;
+    for (const nei of graph[v]) {
+      if (!dfs(nei)) return false;
+    }
+    state[v] = 2;
+    return true;
+  };
+  const res = [];
+  for (let i = 0; i < n; ++i) if (dfs(i)) res.push(i);
+  return res;
+};
 
-//   const dfs = (key, path, length) => {
-//     length += 1;
-//     visited[key] = true;
-//     path[key] = length;
-//     const neighbour = edges[key];
-//     //console.log(key);
-
-//     for (let i = 0; i < neighbour.length; i++) {
-//       if (!visited[neighbour[i]]) {
-//         dfs(neighbour[i], path, length);
-//       } else if (visited[neighbour[i]] && path[neighbour[i]] && key !== neighbour[i]) {
-//         const temp = path[neighbour[i]];
-//         console.log(temp, length, path);
-//         // for (let j = length - temp; j <= length; i++) {
-//         //   result.push(j);
-//         // }
-//       }
-//     }
-
-//     path[key] = undefined;
-//     length -= 1;
-//   };
-//   for (let i = 0; i < edges.length; i++) {
-//     if (!visited[i]) {
-//       dfs(i, new Array(edges.length), 0);
-//     }
-//   }
-
-//   return result;
-// };
-
-// console.log(eventual_safe_nodes([[1, 2], [2, 3], [5], [0], [5], [], []]));
+console.log(eventual_safe_nodes([[0], [2, 3, 4], [3, 4], [0, 4], []]));
