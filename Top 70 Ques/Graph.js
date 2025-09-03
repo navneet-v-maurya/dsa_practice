@@ -428,3 +428,99 @@ console.log(
     [2, 3],
   ])
 );
+
+//topological sort dfs
+const topological_sort_directed_dfs = (v, edges) => {
+  const result = new Array(v);
+  const graph = new Array(v);
+
+  for (let i = 0; i < edges.length; i++) {
+    const first = edges[i][0];
+    const second = edges[i][1];
+
+    if (!graph[first]) graph[first] = [];
+    graph[first].push(second);
+  }
+
+  const visited = {};
+  let count = v - 1;
+
+  const dfs = (key) => {
+    visited[key] = true;
+    const neighbours = graph[key] || [];
+
+    for (let i = 0; i < neighbours.length; i++) {
+      if (!visited[neighbours[i]]) {
+        dfs(neighbours[i]);
+      }
+    }
+
+    result[count] = key;
+    count -= 1;
+  };
+
+  for (let i = 0; i < graph.length; i++) {
+    if (!visited[i]) {
+      dfs(i);
+    }
+  }
+
+  return result;
+};
+
+console.log(
+  "topological_sort_directed_dfs => ",
+  topological_sort_directed_dfs(4, [
+    [3, 0],
+    [1, 0],
+    [2, 0],
+  ])
+);
+
+// const can_finish_course = (total_courses, prerequisites) => {
+//   const graph = new Array(total_courses);
+//   for (let i = 0; i < prerequisites.length; i++) {
+//     const first = prerequisites[i][0];
+//     const second = prerequisites[i][1];
+
+//     if (!graph[second]) graph[second] = [];
+
+//     graph[second].push(first);
+//   }
+
+//   console.log(graph);
+
+//   const queue = [];
+//   const visited = {};
+
+//   for (let i = 0; i < graph.length; i++) {
+//     if (!visited[i]) {
+//       queue.push([i, -1]);
+//       visited[i] = true;
+//       while (queue.length > 0) {
+//         const [current, parent] = queue.shift();
+//         const neighbours = graph[current] || [];
+//         for (let j = 0; j < neighbours.length; j++) {
+//           if (!visited[neighbours[j]]) {
+//             visited[neighbours[j]] = true;
+//             queue.push([neighbours[j], current]);
+//           } else if (parent !== neighbours[j]) {
+//             return true;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   return true;
+// };
+
+// console.log(
+//   can_finish_course(4, [
+//     [2, 0],
+//     [1, 0],
+//     [3, 1],
+//     [3, 2],
+//     [1, 3],
+//   ])
+// );
