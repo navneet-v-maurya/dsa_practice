@@ -477,50 +477,53 @@ console.log(
   ])
 );
 
-// const can_finish_course = (total_courses, prerequisites) => {
-//   const graph = new Array(total_courses);
-//   for (let i = 0; i < prerequisites.length; i++) {
-//     const first = prerequisites[i][0];
-//     const second = prerequisites[i][1];
+const can_finish_course = (total_courses, prerequisites) => {
+  const graph = new Array(total_courses);
+  for (let i = 0; i < prerequisites.length; i++) {
+    const first = prerequisites[i][0];
+    const second = prerequisites[i][1];
 
-//     if (!graph[second]) graph[second] = [];
+    if (!graph[second]) graph[second] = { edges: [], count: 0 };
+    if (!graph[first]) graph[first] = { edges: [], count: 0 };
+    graph[second].edges.push(first);
+    graph[first].count += 1;
+  }
 
-//     graph[second].push(first);
-//   }
+  const queue = [];
 
-//   console.log(graph);
+  const result = [];
+  for (let i = 0; i < graph.length; i++) {
+    const temp = graph[i];
+    if (!temp || temp.count === 0) {
+      result.push(i);
+      queue.push(i);
+    }
+  }
 
-//   const queue = [];
-//   const visited = {};
+  while (queue.length > 0) {
+    const key = queue.shift();
+    const neighbours = graph[key]?.edges || [];
 
-//   for (let i = 0; i < graph.length; i++) {
-//     if (!visited[i]) {
-//       queue.push([i, -1]);
-//       visited[i] = true;
-//       while (queue.length > 0) {
-//         const [current, parent] = queue.shift();
-//         const neighbours = graph[current] || [];
-//         for (let j = 0; j < neighbours.length; j++) {
-//           if (!visited[neighbours[j]]) {
-//             visited[neighbours[j]] = true;
-//             queue.push([neighbours[j], current]);
-//           } else if (parent !== neighbours[j]) {
-//             return true;
-//           }
-//         }
-//       }
-//     }
-//   }
+    for (let i = 0; i < neighbours.length; i++) {
+      graph[neighbours[i]].count -= 1;
 
-//   return true;
-// };
+      if (graph[neighbours[i]].count === 0) {
+        result.push(neighbours[i]);
+        queue.push(neighbours[i]);
+      }
+    }
+  }
 
-// console.log(
-//   can_finish_course(4, [
-//     [2, 0],
-//     [1, 0],
-//     [3, 1],
-//     [3, 2],
-//     [1, 3],
-//   ])
-// );
+  return result.length !== total_courses ? [] : result;
+};
+
+console.log(
+  "can_finish_course => ",
+  can_finish_course(3, [
+    [1, 0],
+    [1, 2],
+    [0, 1],
+  ])
+);
+
+//largest color value in graph
