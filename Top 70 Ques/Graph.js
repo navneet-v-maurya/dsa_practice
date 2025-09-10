@@ -526,5 +526,64 @@ console.log(
   ])
 );
 
-//largest color value in graph
 //flood fill
+
+const flood_fill = (image, sr, sc, color) => {
+  const calc = [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1],
+  ];
+
+  const m = image.length || 0;
+  const n = image[0].length || 0;
+
+  const queue = [];
+  const visited = {};
+
+  queue.push({ key: [sr, sc], parent: null });
+
+  while (queue.length > 0) {
+    const { key, parent } = queue.shift();
+    visited[`${key[0]}${key[1]}`] = key;
+
+    for (let i = 0; i < calc.length; i++) {
+      const new_row = key[0] + calc[i][0];
+      const new_col = key[1] + calc[i][1];
+
+      if (
+        new_row < m &&
+        new_row >= 0 &&
+        new_col < n &&
+        new_col >= 0 &&
+        !visited[`${new_row}${new_col}`] &&
+        image[new_row][new_col] === image[key[0]][key[1]]
+      ) {
+        queue.push({ key: [new_row, new_col], parent: key });
+      }
+    }
+
+    image[key[0]][key[1]] = color;
+  }
+
+  return image;
+};
+
+console.log(
+  "flood_fill => ",
+  flood_fill(
+    [
+      [1, 1, 1],
+      [1, 1, 0],
+      [1, 0, 1],
+    ],
+    1,
+    1,
+    2
+  )
+);
+
+//number of islands
+//rotten oranges
+//largest color value in graph
