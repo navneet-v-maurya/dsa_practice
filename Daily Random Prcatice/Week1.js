@@ -59,7 +59,7 @@ console.log(climb_stairs(4));
 
 //DAY 2
 
-//fibonacci number
+//1. Fibonacci Number
 const fibonacci = (n) => {
     const calculations_arr = new Array(n);
 
@@ -81,7 +81,7 @@ const fibonacci = (n) => {
 
 console.log(fibonacci(10));
 
-//min stack
+//2. Min Stack
 class MinStack {
     constructor() {
         this.stack = [];
@@ -126,18 +126,3 @@ class MinStack {
         return min_val["val"];
     }
 }
-
-const new_stack = new MinStack();
-
-new_stack.push(-2);
-
-new_stack.push(0);
-new_stack.push(-3);
-
-console.log("minnn", new_stack.get_min());
-
-new_stack.pop();
-
-console.log(new_stack.stack, new_stack.top());
-
-console.log("minnn", new_stack.get_min());
