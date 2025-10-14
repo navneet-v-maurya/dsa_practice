@@ -56,3 +56,88 @@ const climb_stairs = (n) => {
 };
 
 console.log(climb_stairs(4));
+
+//DAY 2
+
+//fibonacci number
+const fibonacci = (n) => {
+    const calculations_arr = new Array(n);
+
+    const recusion = (input) => {
+        if (calculations_arr[input]) return calculations_arr[input];
+        if (input === 0) return 0;
+
+        if (input === 1) return 1;
+
+        const result = recusion(input - 1) + recusion(input - 2);
+
+        calculations_arr[input] = result;
+
+        return result;
+    };
+
+    return recusion(n);
+};
+
+console.log(fibonacci(10));
+
+//min stack
+class MinStack {
+    constructor() {
+        this.stack = [];
+    }
+
+    push(val) {
+        if (this.stack.length === 0) {
+            this.stack.push({
+                val,
+                min: 0,
+            });
+        } else {
+            const min_val = this.stack[this.stack[this.stack.length - 1].min].val;
+
+            if (val < min_val) {
+                this.stack.push({
+                    val,
+                    min: this.stack.length,
+                });
+            } else {
+                this.stack.push({
+                    val,
+                    min: this.stack[this.stack.length - 1].min,
+                });
+            }
+        }
+    }
+
+    pop() {
+        this.stack.pop();
+    }
+
+    top() {
+        const top_el = this.stack[this.stack.length - 1] || undefined;
+
+        return top_el["val"];
+    }
+
+    get_min() {
+        const min_val = this.stack[this.stack[this.stack.length - 1]["min"]] || undefined;
+
+        return min_val["val"];
+    }
+}
+
+const new_stack = new MinStack();
+
+new_stack.push(-2);
+
+new_stack.push(0);
+new_stack.push(-3);
+
+console.log("minnn", new_stack.get_min());
+
+new_stack.pop();
+
+console.log(new_stack.stack, new_stack.top());
+
+console.log("minnn", new_stack.get_min());
