@@ -21,7 +21,7 @@ const binary_search = (nums, target) => {
     return -1;
 };
 
-console.log(binary_search([-1, 0, 3, 5, 9, 12], 9));
+console.log("binary_search => ", binary_search([-1, 0, 3, 5, 9, 12], 9));
 
 //2.Climbing Stairs
 const climb_stairs = (n) => {
@@ -55,7 +55,7 @@ const climb_stairs = (n) => {
     return result;
 };
 
-console.log(climb_stairs(4));
+console.log("climb_stairs => ", climb_stairs(4));
 
 //DAY 2
 
@@ -79,7 +79,7 @@ const fibonacci = (n) => {
     return recusion(n);
 };
 
-console.log(fibonacci(10));
+console.log("fibonacci => ", fibonacci(10));
 
 //2. Min Stack
 class MinStack {
@@ -126,3 +126,124 @@ class MinStack {
         return min_val["val"];
     }
 }
+
+//DAY 3
+//1. Flood Fill
+
+const flood_fill = (image, sr, sc, color) => {
+    const queu = new Array();
+    const visited = {};
+
+    const m = image.length;
+
+    const n = image[0].length || 0;
+
+    const neighbors_arr = [
+        [0, 1],
+        [1, 0],
+        [0, -1],
+        [-1, 0],
+    ];
+
+    const starting_color = image[sr][sc];
+
+    queu.push([sr, sc]);
+
+    const is_valid_pixel = (row, column, i) => {
+        const temp = neighbors_arr[i];
+
+        const new_row = row + temp[0];
+        const new_col = column + temp[1];
+
+        if (
+            new_row >= 0 &&
+            new_row < m &&
+            new_col >= 0 &&
+            new_col < n &&
+            image[new_row][new_col] === starting_color &&
+            !visited[`${new_row}${new_col}`]
+        )
+            return [new_row, new_col];
+
+        return null;
+    };
+
+    while (queu.length > 0) {
+        const current_node = queu.shift();
+        const current_row = current_node[0];
+        const current_col = current_node[1];
+        visited[`${current_row}${current_col}`] = current_node;
+
+        image[current_row][current_col] = color;
+
+        for (let i = 0; i < neighbors_arr.length; i++) {
+            const valid_pixel = is_valid_pixel(current_row, current_col, i);
+            if (valid_pixel && valid_pixel.length > 0) {
+                queu.push(valid_pixel);
+            }
+        }
+    }
+
+    return image;
+};
+
+console.log(
+    "flood_fill => ",
+    flood_fill(
+        [
+            [0, 0, 0],
+            [1, 0, 0],
+        ],
+        1,
+        0,
+        2
+    )
+);
+
+//2. Path Sum
+
+const path_sum = (root, targetSum) => {
+    let curr = root;
+    let found = false;
+
+    const recursion = (node, total) => {
+        if (!node) return;
+        total += node.val;
+
+        if (!node.left && !node.right && total === targetSum) {
+            found = true;
+            return;
+        }
+
+        recursion(node.left, total);
+        recursion(node.right, total);
+    };
+
+    recursion(curr, 0);
+
+    return found;
+};
+
+const tree = {
+    val: 5,
+    left: {
+        val: 4,
+        left: {
+            val: 11,
+            left: { val: 7, left: null, right: null },
+            right: { val: 2, left: null, right: null },
+        },
+        right: null,
+    },
+    right: {
+        val: 8,
+        left: { val: 13, left: null, right: null },
+        right: {
+            val: 4,
+            left: null,
+            right: { val: 1, left: null, right: null },
+        },
+    },
+};
+
+console.log("path_sum => ", path_sum(tree, 22));
