@@ -247,3 +247,46 @@ const tree = {
 };
 
 console.log("path_sum => ", path_sum(tree, 22));
+
+//DAY 4
+
+//1. Power of two
+const power_of_two = (n) => {
+    let start = 1;
+
+    while (start <= n) {
+        if (start === n) return true;
+
+        start = start * 2;
+    }
+
+    return false;
+};
+
+console.log("power_of_two => ", power_of_two(17));
+
+const max_depth_binary_tree = (root) => {
+    let curr = root;
+    let max = 0;
+
+    const recursion = (root, curr_total) => {
+        if (!root) return;
+
+        curr_total += 1;
+
+        if (!root.left && !root.right) {
+            max = Math.max(max, curr_total);
+            return;
+        }
+
+        recursion(root.left, curr_total);
+
+        recursion(root.right, curr_total);
+    };
+
+    recursion(curr, 0);
+
+    return max;
+};
+
+console.log("max_depth_binary_tree => ", max_depth_binary_tree(tree));
