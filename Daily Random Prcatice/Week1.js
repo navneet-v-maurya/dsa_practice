@@ -246,6 +246,27 @@ const tree = {
     },
 };
 
+const tree1 = {
+    val: 5,
+    left: {
+        val: 4,
+        left: {
+            val: 11,
+            left: { val: 7, left: null, right: null },
+            right: { val: 2, left: null, right: null },
+        },
+        right: null,
+    },
+    right: {
+        val: 8,
+        left: { val: 13, left: null, right: null },
+        right: {
+            val: 4,
+            left: null,
+            right: null,
+        },
+    },
+};
 console.log("path_sum => ", path_sum(tree, 22));
 
 //DAY 4
@@ -290,3 +311,114 @@ const max_depth_binary_tree = (root) => {
 };
 
 console.log("max_depth_binary_tree => ", max_depth_binary_tree(tree));
+
+//DAY 5
+
+//1. Same tree
+
+const same_tree = (p, q) => {
+    let is_same = true;
+
+    const recuresion = (node1, node2) => {
+        if (!node1 && !node2) return;
+
+        if (!node1 || !node2 || node1.val !== node2.val) {
+            is_same = false;
+            return;
+        }
+
+        recuresion(node1.left, node2.left);
+        recuresion(node1.right, node2.right);
+    };
+
+    recuresion(p, q);
+
+    return is_same;
+};
+
+console.log("same_tree => ", same_tree(tree, tree1));
+
+const merge_sorted_arr = (nums1, m, nums2, n) => {
+    let p1 = m - 1;
+    let p2 = n - 1;
+    let write = m + n - 1;
+
+    while (p2 >= 0) {
+        if (p1 >= 0 && nums1[p1] > nums2[p2]) {
+            nums1[write] = nums1[p1];
+            p1--;
+        } else {
+            nums1[write] = nums2[p2];
+            p2--;
+        }
+        write--;
+    }
+
+    return nums1;
+};
+
+console.log(
+    "merge_sorted_arr => ",
+    merge_sorted_arr([4, 0, 0, 0, 0, 0], 1, [1, 2, 3, 5, 6], 5),
+    ".....PA....."
+);
+
+const n_array_preorder = (root) => {
+    const result = [];
+    const recursion = (curr) => {
+        if (!curr) return;
+
+        result.push(curr.val);
+
+        const children = curr.children;
+
+        for (let i = 0; i < children.length; i++) {
+            recursion(children[i]);
+        }
+    };
+
+    recursion(root);
+
+    return result;
+};
+
+const n_arr_tree = {
+    val: 1,
+    children: [
+        {
+            val: 3,
+            children: [
+                { val: 5, children: [] },
+                { val: 6, children: [] },
+            ],
+        },
+        { val: 2, children: [] },
+        { val: 4, children: [] },
+    ],
+};
+
+console.log("n_array_preorder => ", n_array_preorder(n_arr_tree));
+
+const min_absolute_diff = (arr) => {
+    let diff = Infinity;
+
+    arr.sort((a, b) => {
+        let temp = Math.abs(a - b);
+        if (temp < diff) {
+            diff = temp;
+        }
+        return a - b;
+    });
+
+    const result = [];
+
+    for (let i = 1; i < arr.length; i++) {
+        if (Math.abs(arr[i] - arr[i - 1]) === diff) {
+            result.push([arr[i - 1], arr[i]]);
+        }
+    }
+
+    return result;
+};
+
+console.log("min_absolute_diff => ", min_absolute_diff([3, 8, -10, 23, 19, -4, -14, 27]));
