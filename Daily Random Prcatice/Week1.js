@@ -362,3 +362,63 @@ console.log(
     merge_sorted_arr([4, 0, 0, 0, 0, 0], 1, [1, 2, 3, 5, 6], 5),
     ".....PA....."
 );
+
+const n_array_preorder = (root) => {
+    const result = [];
+    const recursion = (curr) => {
+        if (!curr) return;
+
+        result.push(curr.val);
+
+        const children = curr.children;
+
+        for (let i = 0; i < children.length; i++) {
+            recursion(children[i]);
+        }
+    };
+
+    recursion(root);
+
+    return result;
+};
+
+const n_arr_tree = {
+    val: 1,
+    children: [
+        {
+            val: 3,
+            children: [
+                { val: 5, children: [] },
+                { val: 6, children: [] },
+            ],
+        },
+        { val: 2, children: [] },
+        { val: 4, children: [] },
+    ],
+};
+
+console.log("n_array_preorder => ", n_array_preorder(n_arr_tree));
+
+const min_absolute_diff = (arr) => {
+    let diff = Infinity;
+
+    arr.sort((a, b) => {
+        let temp = Math.abs(a - b);
+        if (temp < diff) {
+            diff = temp;
+        }
+        return a - b;
+    });
+
+    const result = [];
+
+    for (let i = 1; i < arr.length; i++) {
+        if (Math.abs(arr[i] - arr[i - 1]) === diff) {
+            result.push([arr[i - 1], arr[i]]);
+        }
+    }
+
+    return result;
+};
+
+console.log("min_absolute_diff => ", min_absolute_diff([3, 8, -10, 23, 19, -4, -14, 27]));
