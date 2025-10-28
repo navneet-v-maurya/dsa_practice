@@ -40,3 +40,47 @@ const peak_element = (nums) => {
 };
 
 console.log("peak_element => ", peak_element([-2, -1, 0, -3]));
+
+//DAY 2
+//1. Evaluate Reverse Poslish Notation
+
+const reverse_polish_notaion = (tokens) => {
+    const stack = new Array();
+
+    let first, second;
+
+    for (let i = 0; i < tokens.length; i++) {
+        switch (tokens[i]) {
+            case "*":
+                second = stack.pop();
+                first = stack.pop();
+                stack.push(first * second);
+                break;
+            case "-":
+                second = stack.pop();
+                first = stack.pop();
+                stack.push(first - second);
+                break;
+            case "+":
+                second = stack.pop();
+                first = stack.pop();
+                stack.push(first + second);
+                break;
+            case "/":
+                second = stack.pop();
+                first = stack.pop();
+                stack.push((first - (first % second)) / second);
+                break;
+            default:
+                stack.push(Number(tokens[i]));
+        }
+    }
+
+    return stack.pop();
+};
+
+console.log(
+    "reverse_polish_notaion => ",
+    reverse_polish_notaion(["3", "11", "+", "5", "-"]),
+    ".....PA....."
+);
