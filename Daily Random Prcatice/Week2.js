@@ -84,3 +84,60 @@ console.log(
     reverse_polish_notaion(["3", "11", "+", "5", "-"]),
     ".....PA....."
 );
+
+//DAY 3
+
+//1. House Robber
+const house_robber = (nums) => {
+    const visited = {};
+
+    const recursion = (index) => {
+        if (index >= nums.length) {
+            return 0;
+        }
+
+        if (visited[index.toString()]) {
+            return visited[index];
+        }
+
+        const total = nums[index] + recursion(index + 2);
+
+        const skip = recursion(index + 1);
+
+        visited[index] = Math.max(total, skip);
+
+        return visited[index];
+    };
+
+    return recursion(0);
+};
+
+console.log("house_robber => ", house_robber([1, 2, 3, 1]));
+
+//2. Pascal triangle
+const pascals_triangle = (numRows) => {
+    const res = new Array(numRows);
+
+    const get_sum = (row, col) => {
+        const prev_row = res[row - 1] || null;
+
+        if (!prev_row) return 1;
+
+        if (!prev_row[col - 1] || !prev_row[col]) return 1;
+
+        return prev_row[col] + prev_row[col - 1];
+    };
+
+    for (let i = 0; i < numRows; i++) {
+        const arr = new Array(i + 1);
+        for (let j = 0; j <= i; j++) {
+            arr[j] = get_sum(i, j);
+        }
+
+        res[i] = arr;
+    }
+
+    return res;
+};
+
+console.log("pascals_triangle => ", pascals_triangle(5));
