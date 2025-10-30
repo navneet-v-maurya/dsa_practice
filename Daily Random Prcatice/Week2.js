@@ -141,3 +141,121 @@ const pascals_triangle = (numRows) => {
 };
 
 console.log("pascals_triangle => ", pascals_triangle(5));
+
+//DAY 4
+//1. Number of islands
+
+const number_of_islands = (grid) => {
+    const m = grid.length || 0;
+    const n = grid[0].length || 0;
+
+    const new_neightbors = [
+        [1, 0],
+        [-1, 0],
+        [0, -1],
+        [0, 1],
+    ];
+
+    const queue = [];
+    const visited = {};
+
+    const is_valid_neighbour = (row, col, arr) => {
+        const new_row = row + arr[0];
+        const new_col = col + arr[1];
+
+        if (
+            new_row >= 0 &&
+            new_row < m &&
+            new_col >= 0 &&
+            new_col < n &&
+            !visited[`${new_row.toString()},${new_col.toString()}`] &&
+            grid[new_row][new_col] === "1"
+        ) {
+            return true;
+        }
+
+        return false;
+    };
+
+    let count = 0;
+    for (let i = 0; i < grid.length; i++) {
+        for (let k = 0; k < grid[i].length; k++) {
+            if (!visited[`${i.toString()},${k.toString()}`] && grid[i][k] === "1") {
+                count++;
+                queue.push([i, k]);
+                while (queue.length > 0) {
+                    const ele = queue.shift();
+                    visited[`${ele[0].toString()},${ele[1].toString()}`] = ele;
+
+                    for (let j = 0; j < new_neightbors.length; j++) {
+                        if (is_valid_neighbour(ele[0], ele[1], new_neightbors[j])) {
+                            queue.push([
+                                ele[0] + new_neightbors[j][0],
+                                ele[1] + new_neightbors[j][1],
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return count;
+};
+
+const number_of_islands_optimized = (grid) => {
+    const m = grid.length || 0;
+    const n = grid[0].length || 0;
+
+    const new_neightbors = [
+        [1, 0],
+        [-1, 0],
+        [0, -1],
+        [0, 1],
+    ];
+
+    const queue = [];
+    const visited = Array.from({ length: m }, () => Array(n).fill(false));
+    let count = 0;
+    for (let i = 0; i < m; i++) {
+        for (let k = 0; k < n; k++) {
+            if (!visited[i][k] && grid[i][k] === "1") {
+                count++;
+                queue.push([i, k]);
+                visited[i][k] = true;
+
+                while (queue.length > 0) {
+                    const [row, col] = queue.shift();
+
+                    for (let j = 0; j < new_neightbors.length; j++) {
+                        const new_row = row + new_neightbors[j][0];
+                        const new_col = col + new_neightbors[j][1];
+
+                        if (
+                            new_row >= 0 &&
+                            new_row < m &&
+                            new_col >= 0 &&
+                            new_col < n &&
+                            !visited[new_row][new_col] &&
+                            grid[new_row][new_col] === "1"
+                        ) {
+                            visited[new_row][new_col] = true;
+                            queue.push([new_row, new_col]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return count;
+};
+
+console.log(
+    "number_of_islands => ",
+    number_of_islands([
+        ["1", "0", "0", "1"],
+        ["1", "0", "0", "1"],
+        ["0", "0", "0", "1"],
+    ])
+);
