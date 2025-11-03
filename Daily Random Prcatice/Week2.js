@@ -259,3 +259,78 @@ console.log(
         ["0", "0", "0", "1"],
     ])
 );
+
+//subsets
+
+const subsets = (nums) => {
+    const result = [];
+
+    const recursion = (counter, output) => {
+        if (counter >= nums.length) {
+            result.push([...output]);
+            return;
+        }
+
+        const temp = nums[counter];
+
+        counter += 1;
+        recursion(counter, output);
+        output.push(temp);
+        recursion(counter, output);
+        output.pop();
+    };
+
+    recursion(0, []);
+
+    return result;
+};
+
+console.log("subsets => ", subsets([1, 2, 3]));
+
+const daily_temperatures = (temperatures) => {
+    const result = new Array(temperatures.length).fill(0);
+
+    let start = temperatures.length - 1;
+    const stack = [];
+
+    for (let i = start; i >= 0; i--) {
+        const temp = temperatures[i];
+
+        while (temperatures[stack[stack.length - 1]] <= temp) {
+            stack.pop();
+        }
+
+        if (stack.length > 0) {
+            const top = stack[stack.length - 1];
+            result[i] = top - i;
+        }
+        stack.push(i);
+    }
+    return result;
+};
+
+console.log("daily_temperatures => ", daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]));
+
+const permustaions = (nums) => {
+    const result = [];
+
+    const recursion = (output, input) => {
+        if (input.length <= 0) {
+            result.push([...output]);
+            return;
+        }
+
+        for (let i = 0; i < input.length; i++) {
+            const temp = input[i];
+            output.push(temp);
+            recursion(output, input.slice(0, i).concat(input.slice(i + 1)));
+            output.pop();
+        }
+    };
+
+    recursion([], nums);
+
+    return result;
+};
+
+console.log(permustaions([1, 2, 3]));
