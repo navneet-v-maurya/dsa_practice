@@ -27,3 +27,96 @@ console.log("daily_temperatures => ", daily_temperatures([73, 74, 75, 71, 69, 72
 
 //Day 2
 //Binary Tree Inorder Traversal
+
+const inorder_traversal = (root) => {
+    const result = [];
+    const recursion = (node) => {
+        if (!node.left && !node.right) {
+            result.push(node.val);
+            return;
+        }
+
+        if (node.left) {
+            recursion(node.left);
+            result.push(node.val);
+        }
+
+        if (node.right) {
+            if (!node.left) {
+                result.push(node.val);
+                recursion(node.right);
+            } else {
+                recursion(node.right);
+            }
+        }
+    };
+
+    recursion(root);
+    return result;
+};
+
+const tree = {
+    val: 1,
+    left: {
+        val: 2,
+        left: {
+            val: 4,
+            left: null,
+            right: null,
+        },
+        right: {
+            val: 5,
+            left: {
+                val: 6,
+                left: null,
+                right: null,
+            },
+            right: {
+                val: 7,
+                left: null,
+                right: null,
+            },
+        },
+    },
+    right: {
+        val: 3,
+        left: null,
+        right: {
+            val: 8,
+            left: {
+                val: 9,
+                left: null,
+                right: null,
+            },
+            right: null,
+        },
+    },
+};
+
+console.log("inorder_traversal => ", inorder_traversal(tree));
+
+const cominations = (candidates, target) => {
+    const result = [];
+
+    const recursion = (start, sum, output) => {
+        if (sum === target) {
+            result.push([...output]);
+            return;
+        }
+
+        if (sum > target || start >= candidates.length) {
+            return;
+        }
+
+        output.push(candidates[start]);
+        recursion(start, sum + candidates[start], output);
+        output.pop();
+
+        recursion(start + 1, sum, output);
+    };
+
+    recursion(0, 0, []);
+    return result;
+};
+
+console.log("cominations => ", cominations([2, 3, 6, 7], 7));
