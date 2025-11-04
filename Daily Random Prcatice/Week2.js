@@ -287,30 +287,6 @@ const subsets = (nums) => {
 
 console.log("subsets => ", subsets([1, 2, 3]));
 
-const daily_temperatures = (temperatures) => {
-    const result = new Array(temperatures.length).fill(0);
-
-    let start = temperatures.length - 1;
-    const stack = [];
-
-    for (let i = start; i >= 0; i--) {
-        const temp = temperatures[i];
-
-        while (temperatures[stack[stack.length - 1]] <= temp) {
-            stack.pop();
-        }
-
-        if (stack.length > 0) {
-            const top = stack[stack.length - 1];
-            result[i] = top - i;
-        }
-        stack.push(i);
-    }
-    return result;
-};
-
-console.log("daily_temperatures => ", daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]));
-
 const permustaions = (nums) => {
     const result = [];
 
@@ -333,4 +309,35 @@ const permustaions = (nums) => {
     return result;
 };
 
-console.log(permustaions([1, 2, 3]));
+console.log("permustaions => ", permustaions([1, 2, 3]));
+
+class Kth_Largest_Heap {
+    constructor(k, nums) {
+        this.k = k;
+        this.heap = nums;
+        this.heapify();
+    }
+
+    add(val) {
+        this.heap.push(val);
+        this.heap.sort((a, b) => b - a);
+        this.heap.pop();
+        return this.heap[this.heap.length - 2];
+    }
+
+    heapify() {
+        const result = new Array(this.k + 1);
+
+        for (let i = 0; i < this.heap.length; i++) {
+            result.push(this.heap[i]);
+            result.sort((a, b) => b - a);
+            if (result.length >= this.k + 1) result.pop();
+        }
+
+        this.heap = result;
+    }
+}
+
+const h = new Kth_Largest_Heap(3, [4, 5, 8, 2]);
+
+console.log(h.add(3));
