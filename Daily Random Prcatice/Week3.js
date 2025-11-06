@@ -205,3 +205,93 @@ const coin_chnage = (coins, amount) => {
 };
 
 console.log("coin_chnage => ", coin_chnage([1, 2, 5], 11));
+
+//Day 4
+//1. Maximum Product Subarray
+
+const max_product_subarr = (nums) => {
+    let max = -Infinity;
+    const memo = new Map();
+
+    const recursion = (total, index) => {
+        if (index >= nums.length) {
+            return;
+        }
+
+        const key = `${total}-${index}`;
+        if (memo.has(key)) {
+            return memo.get(key);
+        }
+
+        const curr = total * nums[index];
+
+        if (curr > max) {
+            if (curr === -0) {
+                max = 0;
+            } else {
+                max = curr;
+            }
+        }
+
+        if (nums[index] > max) {
+            max = nums[index];
+        }
+
+        recursion(curr, index + 1);
+        recursion(1, index + 1);
+
+        memo.set(key, max);
+        return max;
+    };
+
+    recursion(1, 0);
+    return max;
+};
+
+console.log("max_product_subarr => ", max_product_subarr([2, -5, -2, -4, 3]));
+
+// const find_itinerary = (tickets) => {
+//     const map = {};
+
+//     for (let i = 0; i < tickets.length; i++) {
+//         const curr = tickets[i];
+
+//         if (!map[curr[0]]) map[curr[0]] = [];
+//         map[curr[0]].push(curr[1]);
+//     }
+
+//     let final;
+
+//     const recursion = (curr, output, visited) => {
+//         const neighbous = map[curr];
+//         output.push(curr);
+//         for (let j = 0; j < neighbous.length; j++) {
+//             const key = `${curr}-${neighbous[j]}`;
+//             if (!visited[key]) {
+//                 visited[key] = true;
+//                 recursion(neighbous[j], output, visited);
+//             }
+//         }
+
+//         if (!final || output.length < final.length) {
+//             final = output;
+//         }
+//     };
+
+//     for (let i = 0; i < map["JFK"].length; i++) {
+//         const visited = { [`JFK-${map["JFK"][i]}`]: true };
+//         recursion(map["JFK"][i], ["JFK"], visited);
+//     }
+
+//     return final;
+// };
+
+// console.log(
+//     find_itinerary([
+//         ["JFK", "SFO"],
+//         ["JFK", "ATL"],
+//         ["SFO", "ATL"],
+//         ["ATL", "JFK"],
+//         ["ATL", "SFO"],
+//     ])
+// );
