@@ -250,48 +250,87 @@ const max_product_subarr = (nums) => {
 
 console.log("max_product_subarr => ", max_product_subarr([2, -5, -2, -4, 3]));
 
-// const find_itinerary = (tickets) => {
-//     const map = {};
+const find_itinerary = (tickets) => {
+    const map = {};
 
-//     for (let i = 0; i < tickets.length; i++) {
-//         const curr = tickets[i];
+    for (let i = 0; i < tickets.length; i++) {
+        const curr = tickets[i];
 
-//         if (!map[curr[0]]) map[curr[0]] = [];
-//         map[curr[0]].push(curr[1]);
-//     }
+        if (!map[curr[0]]) map[curr[0]] = [];
+        map[curr[0]].push(curr[1]);
+    }
 
-//     let final;
+    for (const k in map) {
+        map[k].sort((a, b) => b.localeCompare(a));
+    }
 
-//     const recursion = (curr, output, visited) => {
-//         const neighbous = map[curr];
-//         output.push(curr);
-//         for (let j = 0; j < neighbous.length; j++) {
-//             const key = `${curr}-${neighbous[j]}`;
-//             if (!visited[key]) {
-//                 visited[key] = true;
-//                 recursion(neighbous[j], output, visited);
-//             }
-//         }
+    const route = [];
+    const dfs = (node) => {
+        const dests = map[node] || [];
+        while (dests.length) dfs(dests.pop());
+        route.push(node);
+    };
 
-//         if (!final || output.length < final.length) {
-//             final = output;
-//         }
-//     };
+    dfs("JFK");
+    return route.reverse();
+};
 
-//     for (let i = 0; i < map["JFK"].length; i++) {
-//         const visited = { [`JFK-${map["JFK"][i]}`]: true };
-//         recursion(map["JFK"][i], ["JFK"], visited);
-//     }
+console.log(
+    "find_itinerary => ",
+    find_itinerary([
+        ["JFK", "SFO"],
+        ["JFK", "ATL"],
+        ["SFO", "ATL"],
+        ["ATL", "JFK"],
+        ["ATL", "SFO"],
+    ])
+);
 
-//     return final;
-// };
+//Day 5
+//1. Course schedule
+const course_schedule = (numCourses, prerequisites) => {
+    const map = {};
 
-// console.log(
-//     find_itinerary([
-//         ["JFK", "SFO"],
-//         ["JFK", "ATL"],
-//         ["SFO", "ATL"],
-//         ["ATL", "JFK"],
-//         ["ATL", "SFO"],
-//     ])
-// );
+    for (let i = 0; i < prerequisites.length; i++) {
+        const curr = prerequisites[i];
+
+        if (!map[curr[0]]) map[curr[0]] = [];
+        map[curr[0]].push(curr[1]);
+    }
+
+    const visited = {};
+    const visiting = {};
+    let finidhed = true;
+
+    const dfs = (node) => {
+        visited[node] = true;
+        visiting[node] = true;
+        const neighbors = map[node] || [];
+
+        for (let j = 0; j < neighbors.length; j++) {
+            if (visiting[neighbors[j]]) {
+                finidhed = false;
+                return;
+            }
+            if (!visited[neighbors[j]]) {
+                dfs(neighbors[j]);
+            }
+        }
+
+        delete visiting[node];
+    };
+
+    for (let i = 0; i < numCourses; i++) {
+        dfs(i);
+    }
+
+    return finidhed;
+};
+
+console.log(
+    "course_schedule => ",
+    course_schedule(2, [
+        [1, 0],
+        [0, 1],
+    ])
+);
