@@ -340,4 +340,29 @@ class Kth_Largest_Heap {
 
 const h = new Kth_Largest_Heap(3, [4, 5, 8, 2]);
 
-console.log(h.add(3));
+console.log("kth_largest_element => ", h.add(3));
+
+const { MaxHeapObj } = require("../Dsa/Heap");
+const top_k_frequent_elements = (nums, k) => {
+    const max_heap = new MaxHeapObj();
+
+    const map = {};
+
+    for (let i = 0; i < nums.length; i++) {
+        map[nums[i]] = map[nums[i]] + 1 || 0;
+    }
+
+    const result = [];
+
+    for (let key in map) {
+        max_heap.push({ diff: map[key], el: key });
+    }
+
+    for (let i = 0; i < k; i++) {
+        result.push(Number(max_heap.pop().el) || 0);
+    }
+
+    return result;
+};
+
+console.log("top_k_frequent_elements => ", top_k_frequent_elements([3, 0, 1, 0], 1));
