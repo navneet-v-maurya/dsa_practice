@@ -57,8 +57,8 @@ const num_decodings_optimized = (s) => {
     return dfs(0);
 };
 
-console.log(num_decodings("111"));
-console.log(num_decodings_optimized("111"));
+console.log("num_decodings => ", num_decodings("111"));
+console.log("num_decodings_optimized => ", num_decodings_optimized("111"));
 
 //2. Word Break ||
 
@@ -95,4 +95,4 @@ const obj = {
     dog: "dog",
 };
 
-console.log(word_break_second("catsanddog", obj));
+console.log("word_break_second => ", word_break_second("catsanddog", obj));
