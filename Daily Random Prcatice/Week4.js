@@ -2,7 +2,6 @@
 
 //DAY 1
 //1. Num Decodings
-
 const num_decodings = (s) => {
     const start = 65;
     const end = 90;
@@ -61,7 +60,6 @@ console.log("num_decodings => ", num_decodings("111"));
 console.log("num_decodings_optimized => ", num_decodings_optimized("111"));
 
 //2. Word Break ||
-
 const word_break_second = (s, wordDict) => {
     const result = [];
 
@@ -96,3 +94,111 @@ const obj = {
 };
 
 console.log("word_break_second => ", word_break_second("catsanddog", obj));
+
+const unique_paths = (obstacleGrid) => {
+    const m = obstacleGrid.length - 1 || 0;
+    const n = obstacleGrid[0].length - 1 || 0;
+
+    const calc = [
+        [0, 1],
+        [1, 0],
+    ];
+
+    let counter = 0;
+
+    const visiting = {};
+
+    const dfs = (x, y) => {
+        if (obstacleGrid[x][y] === 1) return;
+
+        if (x === m && y === n) {
+            counter += 1;
+            return;
+        }
+
+        visiting[`${x}-${y}`] = true;
+
+        for (let i = 0; i < calc.length; i++) {
+            const temp = calc[i];
+            const new_x = x + temp[0];
+            const new_y = y + temp[1];
+
+            if (
+                new_x <= m &&
+                new_y <= n &&
+                obstacleGrid[new_x][new_y] === 0 &&
+                !visiting[`${new_x}-${new_y}`]
+            ) {
+                dfs(new_x, new_y);
+                delete visiting[`${new_x}-${new_y}`];
+            }
+        }
+    };
+
+    dfs(0, 0);
+    return counter;
+};
+
+const unique_paths_optimized = (obstacleGrid) => {
+    const m = obstacleGrid.length;
+    if (m === 0) return 0;
+    const n = obstacleGrid[0].length;
+
+    const memo = {};
+
+    const dfs = (x, y) => {
+        if (x >= m || y >= n) return 0;
+        if (obstacleGrid[x][y] === 1) return 0;
+
+        const key = `${x}-${y}`;
+        if (memo.hasOwnProperty(key)) return memo[key];
+
+        if (x === m - 1 && y === n - 1) {
+            memo[key] = 1;
+            return 1;
+        }
+
+        const right = dfs(x, y + 1);
+        const down = dfs(x + 1, y);
+
+        memo[key] = right + down;
+        return memo[key];
+    };
+
+    return dfs(0, 0);
+};
+
+console.log(
+    "unique_paths_optimized => ",
+    unique_paths_optimized([
+        [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0],
+        [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0],
+        [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    ])
+);
