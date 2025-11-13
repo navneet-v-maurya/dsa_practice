@@ -202,3 +202,31 @@ console.log(
         [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
     ])
 );
+
+//DAY 4
+//1. Generate Parenthesis
+
+const generate_parenthesis = (n) => {
+    const result = [];
+
+    const recusrsion = (str, start, end) => {
+        if (start <= 0 && end <= 0) {
+            result.push(str);
+            return;
+        }
+
+        if (start > 0 && start <= end) {
+            recusrsion(str + "(", start - 1, end);
+        }
+
+        if (end > start) {
+            recusrsion(str + ")", start, end - 1);
+        }
+    };
+
+    recusrsion("", n, n);
+
+    return result;
+};
+
+console.log("generate_parenthesis => ", generate_parenthesis(3));
