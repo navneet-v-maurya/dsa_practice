@@ -109,3 +109,36 @@ console.log(group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
 //         [13, 14, 15, 16],
 //     ])
 // );
+
+const k_closest_points = (points, k) => {
+    const { MinHeapObj } = require("../Dsa/Heap");
+
+    const heap = new MinHeapObj();
+
+    for (let i = 0; i < points.length; i++) {
+        const curr = points[i];
+        const val = Math.sqrt(Math.pow(curr[0], 2) + Math.pow(curr[1], 2));
+        heap.push({ el: i, diff: val });
+    }
+
+    const result = [];
+
+    for (let i = 0; i < k; i++) {
+        const temp = heap.pop();
+
+        result.push(points[temp.el]);
+    }
+
+    return result;
+};
+
+console.log(
+    k_closest_points(
+        [
+            [3, 3],
+            [5, -1],
+            [-2, 4],
+        ],
+        2
+    )
+);
